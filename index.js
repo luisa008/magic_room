@@ -1,0 +1,100 @@
+// import * as THREE from './node_modules/three';
+// import { Interaction } from '/home/luisa/information/node_modules/three.interaction';
+
+// parameter
+const objList = [];
+let angle = 0;
+let scene, renderer, camera
+
+// Basic scene
+function initScene(){
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  camera.position.z = 5;
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+}
+
+// create scene
+class object {  
+    constructor(geometry, material, name="") {
+      this.geometry = geometry;
+      this.material = material;
+      this.mesh = new THREE.Mesh( this.geometry, this.material );
+      this.mesh.name = name;
+    }
+    addToScene(scene) {
+      scene.add(this.mesh);
+    }
+    removeFromScene(scene) {
+      scene.remove(this.mesh);
+    }
+    setPosition(x=0, y=0, z=0) {
+      this.mesh.position.set(x, y, z);
+    }
+  }
+
+function createObject(){
+  const material = new THREE.MeshPhysicalMaterial({
+      metalness: 0,  
+      roughness: 0,
+      thickness: 1,
+      transmission: 1
+  });
+  objList.push(new object(new THREE.IcosahedronGeometry(1, 0), material, 'dimond'))
+  objList[0].addToScene(scene)
+  objList[0].setPosition(1, 0, 0)
+
+  objList.push(new object(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial( { color: 0x0000ff } ), 'square'))
+  console.log(objList)
+  objList[1].addToScene(scene)
+}
+
+// cube.cursor = "pointer";
+// cube.name = 'object'
+// var a = scene.getObjectByName("object");
+// console.log(a)
+
+function createLight(){
+  const light = new THREE.DirectionalLight(0xfff0dd, 1);
+  light.position.set(0, 5, 10);
+  scene.add(light);
+}
+
+function addBackgorund(){
+  const bgTexture = new THREE.TextureLoader().load("texture.jpg");
+  const bgGeometry = new THREE.PlaneGeometry(20, 20);
+  const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
+  const bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+  bgMesh.position.set(0, 0, -5);
+  scene.add(bgMesh);
+}
+
+
+function animate() {
+    objList[0].mesh.rotation.x += 0.01;
+    objList[0].mesh.rotation.y += 0.01;
+    objList[1].mesh.rotation.x += 0.01;
+    objList[1].mesh.rotation.y += 0.01;
+    // cube.position.x += 0.01;
+    // camera.lookAt(cube.position)
+    angle += 0.005;
+    var x = 5 * Math.sin(angle);
+    var z = 3 * Math.cos(angle);
+    objList[0].mesh.position.set(x, 0, z);
+    // camera.position.set(x, 0, z*3);
+};
+
+function render(){
+    requestAnimationFrame( render );
+    animate();
+    renderer.render( scene, camera );
+}
+
+initScene();
+createObject();
+createLight();
+addBackgorund();
+render();

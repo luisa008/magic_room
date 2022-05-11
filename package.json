@@ -1,0 +1,19 @@
+{
+  "name": "magic_room",
+  "version": "1.0.0",
+  "description": "here",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "here"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "three": "^0.140.2"
+  }
+}
