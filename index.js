@@ -1,5 +1,7 @@
 // import * as THREE from './node_modules/three';
 // import { Interaction } from '/home/luisa/information/node_modules/three.interaction';
+// import * as THREE from 'https://unpkg.com/three@0.140.2/build/three.module.js';
+// import { OrbitControls } from "https://threejs.org/examples/js/controls/OrbitControls.js";
 
 // parameter
 const objList = {};
@@ -63,12 +65,12 @@ function createObject(){
   addBackgorund(0, -5, 5, "floor", [-1/2, 0, 0], [20, 10, 1], "src/floor.jpg");
 
   // create showcase
-  addShowcase(-5, -2.5, 11, "case1", [0, 0, 0], [1, 2, 1]);
-  addShowcase(-5, -2.5, 8, "case2", [0, 0, 0], [1, 2, 1]);
-  addShowcase(5, -2.5, 10, "case3", [0, 0, 0], [1, 2, 3]);
+  addShowcase(-5, -2.5, 9, "case1", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-5, -2.5, 6, "case2", [0, 0, 0], [1, 2, 1]);
+  addShowcase(5, -2.5, 9, "case3", [0, 0, 0], [1, 2, 3]);
 
   // create items
-  addVase(-5, -1, 11, "vase1", [0, 0, 0], [0.5, 1, 1])
+  addVase(-5, -1, 9, "vase1", [0, 0, 0], [0.5, 1, 1])
 }
 
 // cube.cursor = "pointer";
