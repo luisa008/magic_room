@@ -18,6 +18,7 @@ function initScene(){
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
   document.body.appendChild( renderer.domElement );
 }
 
@@ -54,15 +55,15 @@ function createObject(){
   addBackgorund(0, -5, 10, "floor", [-1/2, 0, 0], [20, 20, 0.1], "src/floor.jpg");
 
   // create showcase
-  addShowcase(-6, -3, 9, "case1", [0, 0, 0], [1, 2, 1]);
-  addShowcase(-6, -3, 6, "case2", [0, 0, 0], [1, 2, 1]);
-  addShowcase(6, -3, 9, "case3", [0, 0, 0], [1, 2, 5]);
-  addShowcase(6, -3, 15, "case4", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -4, 9, "case1", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -4, 6, "case2", [0, 0, 0], [1, 2, 1]);
+  addShowcase(6, -4, 9, "case3", [0, 0, 0], [1, 2, 5]);
+  addShowcase(6, -4, 15, "case4", [0, 0, 0], [1, 2, 1]);
 
   // create items
-  addDimond(-6, -1.5, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
-  addBowl(-6, -1.5, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
-  addGlb(6, -1.5, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
+  addDimond(-6, -2, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
+  addBowl(-6, -2, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
+  addGlb(6, -2.4, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
 }
 
 function createLight(){
@@ -146,6 +147,7 @@ function animate() {
 function render(){
     requestAnimationFrame( render );
     animate();
+    controls.update();
     renderer.render( scene, camera );
 }
 
