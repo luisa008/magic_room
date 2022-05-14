@@ -2,11 +2,13 @@
 // import { Interaction } from '/home/luisa/information/node_modules/three.interaction';
 // import * as THREE from 'https://unpkg.com/three@0.140.2/build/three.module.js';
 // import { OrbitControls } from "https://threejs.org/examples/js/controls/OrbitControls.js";
+// import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
 
 // parameter
 const objList = {};
 let angle = 0;
-let scene, renderer, camera
+let scene, renderer, camera;
+let vase;
 
 // Basic scene
 function initScene(){
@@ -45,38 +47,23 @@ class object {
   }
 
 function createObject(){
-  // const material = new THREE.MeshPhysicalMaterial({
-  //     metalness: 0,  
-  //     roughness: 0,
-  //     thickness: 1,
-  //     transmission: 1
-  // });
-  // objList["cube"] = new object(new THREE.IcosahedronGeometry(1, 0), material, 'dimond')
-  // objList["cube"].addToScene(scene)
-  // objList["cube"].setPosition(1, 0, 0)
-
-  // objList["cube2"] = new object(new THREE.BoxGeometry(), new THREE.MeshBasicMaterial( { color: 0x0000ff } ), 'square')
-  // objList["cube2"].addToScene(scene)
-
   // create wall and floor
-  addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 10, 0.5]);
-  addBackgorund(-10, 0, 5, "leftwall", [0, 1/2, 0], [10, 10, 0.5]);
-  addBackgorund(10, 0, 5, "rightwall", [0, -1/2, 0], [10, 10, 0.5]);
-  addBackgorund(0, -5, 5, "floor", [-1/2, 0, 0], [20, 10, 1], "src/floor.jpg");
+  addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 10, 0.1]);
+  addBackgorund(-10, 0, 10, "leftwall", [0, 1/2, 0], [20, 10, 0.1]);
+  addBackgorund(10, 0, 10, "rightwall", [0, -1/2, 0], [20, 10, 0.1]);
+  addBackgorund(0, -5, 10, "floor", [-1/2, 0, 0], [20, 20, 0.1], "src/floor.jpg");
 
   // create showcase
-  addShowcase(-5, -2.5, 9, "case1", [0, 0, 0], [1, 2, 1]);
-  addShowcase(-5, -2.5, 6, "case2", [0, 0, 0], [1, 2, 1]);
-  addShowcase(5, -2.5, 9, "case3", [0, 0, 0], [1, 2, 3]);
+  addShowcase(-6, -3, 9, "case1", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -3, 6, "case2", [0, 0, 0], [1, 2, 1]);
+  addShowcase(6, -3, 9, "case3", [0, 0, 0], [1, 2, 5]);
+  addShowcase(6, -3, 15, "case4", [0, 0, 0], [1, 2, 1]);
 
   // create items
-  addVase(-5, -1, 9, "vase1", [0, 0, 0], [0.5, 1, 1])
+  addDimond(-6, -1.5, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
+  addBowl(-6, -1.5, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
+  addGlb(6, -1.5, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
 }
-
-// cube.cursor = "pointer";
-// cube.name = 'object'
-// var a = scene.getObjectByName("object");
-// console.log(a)
 
 function createLight(){
   const light = new THREE.DirectionalLight(0xfff0dd, 1);
@@ -86,15 +73,12 @@ function createLight(){
 
 function addBackgorund(x, y, z, name, angle, size, texture="src/wall.jpg"){
   const bgTexture = new THREE.TextureLoader().load(texture);
-  const bgGeometry = new THREE.PlaneGeometry(size[0], size[1]);
+  const bgGeometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
   const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
   objList[name] = new object(bgGeometry, bgMaterial, name)
   objList[name].setPosition(x, y, z)
   objList[name].addToScene(scene)
   objList[name].setRotation(angle)
-  // const bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
-  // bgMesh.position.set(0, 0, -5);
-  //scene.add(bgMesh);
 }
 
 function addShowcase(x, y, z, name, angle, size){
@@ -106,7 +90,7 @@ function addShowcase(x, y, z, name, angle, size){
   objList[name].addToScene(scene)
 }
 
-function addVase(x, y, z, name, angle, size){
+function addDimond(x, y, z, name, angle, size){
   // const texture = new THREE.TextureLoader().load("src/showcase.jpg");
   const geometry = new THREE.IcosahedronGeometry(0.5, 0);
   const material = new THREE.MeshPhysicalMaterial({
@@ -120,13 +104,35 @@ function addVase(x, y, z, name, angle, size){
   objList[name].addToScene(scene)
 }
 
+function addBowl(x, y, z, name, angle, size){
+  const points = [];
+  for ( let i = 0; i < 10; i ++ ) {
+    points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 0.3, ( i - 8 ) * 0.08 ) );
+  }
+  const geometry = new THREE.LatheGeometry( points );
+  const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+  objList[name] = new object(geometry, material, name)
+  objList[name].setPosition(x, y, z)
+  objList[name].addToScene(scene)
+}
+
+function addGlb(x, y, z, name, angle, size, glbfile){
+  const loader = new THREE.GLTFLoader();
+  const glb = loader.load( glbfile, function ( gltf ){
+    vase = gltf.scene;
+    vase.position.set(x, y, z);
+    vase.scale.set(0.5, 0.5, 0.5);
+    vase.name = name;
+    scene.add(vase);
+  } );
+}
+
 function animate() {
-    objList["vase1"].mesh.rotation.x += 0.01;
-    objList["vase1"].mesh.rotation.y += 0.01;
-    // objList["cube"].mesh.rotation.x += 0.01;
-    // objList["cube"].mesh.rotation.y += 0.01;
-    // objList["cube2"].mesh.rotation.x += 0.01;
-    // objList["cube2"].mesh.rotation.y += 0.01;
+    objList["dimond1"].mesh.rotation.x += 0.01;
+    objList["dimond1"].mesh.rotation.y += 0.01;
+    objList["bowl1"].mesh.rotation.x += 0.01;
+    objList["bowl1"].mesh.rotation.y += 0.01;
+    vase.rotation.y += 0.01;
     // cube.position.x += 0.01;
     // camera.lookAt(cube.position)
     // angle += 0.005;
