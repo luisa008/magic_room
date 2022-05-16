@@ -15,7 +15,7 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.z = 20;
-  camera.position.y = -2;
+  camera.position.y = -7;
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -50,21 +50,23 @@ class object {
 
 function createObject(){
   // create wall and floor
-  addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 10, 0.1]);
-  addBackgorund(-10, 0, 10, "leftwall", [0, 1/2, 0], [20, 10, 0.1]);
-  addBackgorund(10, 0, 10, "rightwall", [0, -1/2, 0], [20, 10, 0.1]);
-  addBackgorund(0, -5, 10, "floor", [-1/2, 0, 0], [20, 20, 0.1], "src/floor.jpg");
+  addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 20, 0.1]);
+  addBackgorund(-10, 0, 10, "leftwall", [0, 1/2, 0], [20, 20, 0.1]);
+  addBackgorund(10, 0, 10, "rightwall", [0, -1/2, 0], [20, 20, 0.1]);
+  addBackgorund(0, -10, 10, "floor", [-1/2, 0, 0], [20, 20, 0.1], "src/floor.jpg");
+  addBackgorund(0, 0, 20, "frontwall", [0, 0, 0], [20, 20, 0.1]);
+  addBackgorund(0, 10, 10, "ceiling", [-1/2, 0, 0], [20, 20, 0.1], "src/ceiling.jpg");
 
   // create showcase
-  addShowcase(-6, -4, 9, "case1", [0, 0, 0], [1, 2, 1]);
-  addShowcase(-6, -4, 6, "case2", [0, 0, 0], [1, 2, 1]);
-  addShowcase(6, -4, 9, "case3", [0, 0, 0], [1, 2, 5]);
-  addShowcase(6, -4, 15, "case4", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -9, 9, "case1", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -9, 6, "case2", [0, 0, 0], [1, 2, 1]);
+  addShowcase(6, -9, 9, "case3", [0, 0, 0], [1, 2, 5]);
+  addShowcase(6, -9, 15, "case4", [0, 0, 0], [1, 2, 1]);
 
   // create items
-  addDimond(-6, -2, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
-  addBowl(-6, -2, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
-  addGlb(6, -2.4, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
+  addDimond(-6, -7, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
+  addBowl(-6, -7, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
+  addGlb(6, -7.4, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
 }
 
 function createLight(){
@@ -101,6 +103,7 @@ function addDimond(x, y, z, name, angle, size){
     thickness: 1,
     transmission: 1
   });
+  material.transmission = 1;
   objList[name] = new object(geometry, material, name)
   objList[name].setPosition(x, y, z)
   objList[name].addToScene(scene)
