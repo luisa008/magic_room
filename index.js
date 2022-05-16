@@ -18,7 +18,7 @@ function initScene(){
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  // controls = new THREE.OrbitControls(camera, renderer.domElement);
   document.body.appendChild( renderer.domElement );
 }
 
@@ -133,7 +133,9 @@ function animate() {
     objList["dimond1"].mesh.rotation.y += 0.01;
     objList["bowl1"].mesh.rotation.x += 0.01;
     objList["bowl1"].mesh.rotation.y += 0.01;
-    vase.rotation.y += 0.01;
+    if (vase) {
+      vase.rotation.y += 0.01;
+    }
     // cube.position.x += 0.01;
     // camera.lookAt(cube.position)
     // angle += 0.005;
@@ -147,7 +149,7 @@ function animate() {
 function render(){
     requestAnimationFrame( render );
     animate();
-    controls.update();
+    // controls.update();
     renderer.render( scene, camera );
 }
 

@@ -1,6 +1,14 @@
-let RADIUS = 1;
+let PACE = 0.5;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
+
+function sin(degree) {
+    return Math.sin((degree / 180) * Math.PI )
+}
+
+function cos(degree) {
+    return Math.cos((degree / 180) * Math.PI )
+}
 
 document.addEventListener('keydown', (e) => {
     if (e.code == "KeyW" || e.code == "KeyS" || e.code == "KeyA" || e.code == "KeyD") {
@@ -18,8 +26,8 @@ document.addEventListener('keydown', (e) => {
         else if (e.code == "KeyD") {
             angleXZ = eyeAngleXZ - 90;
         }
-        let deltaX = - Math.sin((angleXZ / 360) * Math.PI * 2) * RADIUS;
-        let deltaZ = - Math.cos((angleXZ / 360) * Math.PI * 2) * RADIUS;
+        let deltaX = - sin(angleXZ) * PACE;
+        let deltaZ = - cos(angleXZ) * PACE;
 
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
@@ -38,10 +46,9 @@ document.addEventListener('keydown', (e) => {
             eyeAngleXZ -= 1.0;
         }
         
-        let deltaX = - Math.sin((eyeAngleXZ / 360) * Math.PI * 2) * RADIUS;
-        let deltaY = Math.sin((eyeAngleYZ / 360) * Math.PI * 2) * RADIUS;
-        let deltaZ = - Math.cos((eyeAngleXZ / 360) * Math.PI * 2) * RADIUS - Math.cos((eyeAngleYZ / 360) * Math.PI * 2) * RADIUS;
-        
+        let deltaX = - sin(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
+        let deltaY = sin(eyeAngleYZ) * RADIUS;
+        let deltaZ = - cos(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
 
         let lookPos = new THREE.Vector3(
             camera.position.x + deltaX, 
