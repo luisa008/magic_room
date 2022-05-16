@@ -1,4 +1,5 @@
 let PACE = 0.5;
+let RADIUS = 1.0;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
 
