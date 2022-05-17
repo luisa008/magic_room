@@ -15,7 +15,7 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.z = 20;
-  camera.position.y = -7;
+  camera.position.y = -5;
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -46,33 +46,57 @@ class object {
       this.mesh.rotation.y = Math.PI * angle[1];
       this.mesh.rotation.z = Math.PI * angle[2];
     }
+    setScale(x=1, y=1, z=1){
+      this.mesh.scale.set(x, y, z)
+    }
   }
 
 function createObject(){
   // create wall and floor
   addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 20, 0.1]);
-  addBackgorund(-10, 0, 10, "leftwall", [0, 1/2, 0], [20, 20, 0.1]);
-  addBackgorund(10, 0, 10, "rightwall", [0, -1/2, 0], [20, 20, 0.1]);
-  addBackgorund(0, -10, 10, "floor", [-1/2, 0, 0], [20, 20, 0.1], "src/floor.jpg");
-  addBackgorund(0, 0, 20, "frontwall", [0, 0, 0], [20, 20, 0.1]);
-  addBackgorund(0, 10, 10, "ceiling", [-1/2, 0, 0], [20, 20, 0.1], "src/ceiling.jpg");
+  addBackgorund(-10, 0, 15, "leftwall", [0, 1/2, 0], [30, 20, 0.1]);
+  addBackgorund(10, 0, 15, "rightwall", [0, -1/2, 0], [30, 20, 0.1]);
+  addBackgorund(0, -10, 15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "src/floor.jpg");
+  addBackgorund(0, 0, 30, "frontwall", [0, 0, 0], [20, 20, 0.1]);
+  addBackgorund(0, 10, 15, "ceiling", [-1/2, 0, 0], [20, 30, 0.1], "src/ceiling.jpg");
+  addBackgorund(-9, 9, 15, "beam1", [0, 1/2, 0], [30, 1, 2]);
+  addBackgorund(9, 9, 15, "beam2", [0, 1/2, 0], [30, 1, 2]);
+  addBackgorund(0, 9, 1, "beam3", [0, 0, 0], [20, 1, 2]);
+  addBackgorund(0, 9, 29, "beam4", [0, 0, 0], [20, 1, 2]);
 
   // create showcase
-  addShowcase(-6, -9, 9, "case1", [0, 0, 0], [1, 2, 1]);
-  addShowcase(-6, -9, 6, "case2", [0, 0, 0], [1, 2, 1]);
-  addShowcase(6, -9, 9, "case3", [0, 0, 0], [1, 2, 5]);
-  addShowcase(6, -9, 15, "case4", [0, 0, 0], [1, 2, 1]);
+  addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1]);
+  addShowcase(-6, -8, 6, "case2", [0, 0, 0], [1, 4, 1]);
+  addShowcase(6, -8, 9, "case3", [0, 0, 0], [1, 4, 5]);
+  addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1]);
+  addShowcase(-6, -8, 15, "case5", [0, 0, 0], [1, 4, 5]);
+  addShowcase(6, -8, 22, "case6", [0, 0, 0], [1, 4, 5]);
+  addShowcase(5, -8, 27, "case7", [0, 0, 0], [1, 4, 1]);
+  addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1]);
 
   // create items
-  addDimond(-6, -7, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
-  addBowl(-6, -7, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
-  addGlb(6, -7.4, 9, "vase1", [0, 0, 0], [0.5, 1, 1], 'src/vase1.glb')
+  addDimond(-6, -5, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
+  addBowl(-6, -5, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
+  addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/vase1.glb')
+  addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/chandelier4.glb')
+  addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/man1.glb')
+
+  // create picture
+  addPlane(-9.9, -5, 9, "plane1", [0, 1/2, 0], [2, 3, 3], 'src/kaleidoscope.jpg')
+  addBackgorund(-9.9, -3.5, 9, "ceiling", [0, 1/2, 0], [2, 0.3, 0.5], "src/frame.jpg");
+  addBackgorund(-9.9, -6.5, 9, "ceiling", [0, 1/2, 0], [2, 0.3, 0.5], "src/frame.jpg");
+  addBackgorund(-9.9, -5, 10, "ceiling", [0, 1/2, 0], [0.3, 3.3, 0.5], "src/frame.jpg");
+  addBackgorund(-9.9, -5, 8, "ceiling", [0, 1/2, 0], [0.3, 3.3, 0.5], "src/frame.jpg");
 }
 
 function createLight(){
-  const light = new THREE.DirectionalLight(0xfff0dd, 1);
-  light.position.set(0, 5, 10);
+  const light = new THREE.AmbientLight(0xfff0dd, 1);
+  // light.position.set(0, 5, 10);
   scene.add(light);
+  const spotLight = new THREE.SpotLight( 0xffffff );
+  spotLight.intensity = 1;
+  spotLight.position.set( 500, 500, 500 );
+  scene.add(spotLight);
 }
 
 function addBackgorund(x, y, z, name, angle, size, texture="src/wall.jpg"){
@@ -95,7 +119,6 @@ function addShowcase(x, y, z, name, angle, size){
 }
 
 function addDimond(x, y, z, name, angle, size){
-  // const texture = new THREE.TextureLoader().load("src/showcase.jpg");
   const geometry = new THREE.IcosahedronGeometry(0.5, 0);
   const material = new THREE.MeshPhysicalMaterial({
     metalness: 0,  
@@ -112,11 +135,17 @@ function addDimond(x, y, z, name, angle, size){
 function addBowl(x, y, z, name, angle, size){
   const points = [];
   for ( let i = 0; i < 10; i ++ ) {
-    points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 0.3, ( i - 8 ) * 0.08 ) );
+    points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
   }
   const geometry = new THREE.LatheGeometry( points );
-  const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+  const material = new THREE.MeshPhysicalMaterial({
+    metalness: 0,  
+    roughness: 0.3,
+    thickness: 0.5,
+    transmission: 1
+  });
   objList[name] = new object(geometry, material, name)
+  objList[name].setScale(0.05, 0.05, 0.05);
   objList[name].setPosition(x, y, z)
   objList[name].addToScene(scene)
 }
@@ -126,10 +155,22 @@ function addGlb(x, y, z, name, angle, size, glbfile){
   const glb = loader.load( glbfile, function ( gltf ){
     vase = gltf.scene;
     vase.position.set(x, y, z);
-    vase.scale.set(0.5, 0.5, 0.5);
+    vase.scale.set(size[0], size[1], size[2]);
     vase.name = name;
+    vase.rotation.y = Math.PI * angle[1];
     scene.add(vase);
+    objList[name] = vase;
   } );
+}
+
+function addPlane(x, y, z, name, angle, size, texture){
+  const bgTexture = new THREE.TextureLoader().load(texture);
+  const bgGeometry = new THREE.PlaneGeometry(size[0], size[1]);
+  const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture, side: THREE.DoubleSide });
+  objList[name] = new object(bgGeometry, bgMaterial, name)
+  objList[name].setPosition(x, y, z)
+  objList[name].addToScene(scene)
+  objList[name].setRotation(angle)
 }
 
 function animate() {
@@ -137,9 +178,8 @@ function animate() {
     objList["dimond1"].mesh.rotation.y += 0.01;
     objList["bowl1"].mesh.rotation.x += 0.01;
     objList["bowl1"].mesh.rotation.y += 0.01;
-    if (vase) {
-      vase.rotation.y += 0.01;
-    }
+    objList["chandelier"].rotation.y += 0.01;
+    objList["vase1"].rotation.y += 0.01;
     // cube.position.x += 0.01;
     // camera.lookAt(cube.position)
     // angle += 0.005;
