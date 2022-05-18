@@ -13,7 +13,20 @@
 		<script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/loaders/GLTFLoader.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/controls/OrbitControls.js"></script>
 		<script src="index.js"></script>
-		<script src="js/keyboard.js"></script>
-		<script src="js/mouse.js"></script>
+		<script src="js/room1.js"></script>
+		<script src="js/control/keyboard.js"></script>
+		<script src="js/control/mouse.js"></script>
+		<script>
+			function animate() {
+				room1Animate();
+			}
+			function render(){
+				requestAnimationFrame( render );
+				animate();
+				// controls.update();
+				renderer.render( scene, camera );
+			}
+			render();
+		</script>
 	</body>
 </html>

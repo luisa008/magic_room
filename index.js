@@ -5,7 +5,10 @@
 // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
 
 // parameter
-const objList = {};
+const objList = {
+  "room1": {},
+  "room2": {}
+};
 let angle = 0;
 let scene, renderer, camera;
 let vase;
@@ -51,44 +54,6 @@ class object {
     }
   }
 
-function createObject(){
-  // create wall and floor
-  addBackgorund(0, 0, 0, "backwall", [0, 0, 0], [20, 20, 0.1]);
-  addBackgorund(-10, 0, 15, "leftwall", [0, 1/2, 0], [30, 20, 0.1]);
-  addBackgorund(10, 0, 15, "rightwall", [0, -1/2, 0], [30, 20, 0.1]);
-  addBackgorund(0, -10, 15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "src/floor.jpg");
-  addBackgorund(0, 0, 30, "frontwall", [0, 0, 0], [20, 20, 0.1]);
-  addBackgorund(0, 10, 15, "ceiling", [-1/2, 0, 0], [20, 30, 0.1], "src/ceiling.jpg");
-  addBackgorund(-9, 9, 15, "beam1", [0, 1/2, 0], [30, 1, 2]);
-  addBackgorund(9, 9, 15, "beam2", [0, 1/2, 0], [30, 1, 2]);
-  addBackgorund(0, 9, 1, "beam3", [0, 0, 0], [20, 1, 2]);
-  addBackgorund(0, 9, 29, "beam4", [0, 0, 0], [20, 1, 2]);
-
-  // create showcase
-  addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1]);
-  addShowcase(-6, -8, 6, "case2", [0, 0, 0], [1, 4, 1]);
-  addShowcase(6, -8, 9, "case3", [0, 0, 0], [1, 4, 5]);
-  addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1]);
-  addShowcase(-6, -8, 15, "case5", [0, 0, 0], [1, 4, 5]);
-  addShowcase(6, -8, 22, "case6", [0, 0, 0], [1, 4, 5]);
-  addShowcase(5, -8, 27, "case7", [0, 0, 0], [1, 4, 1]);
-  addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1]);
-
-  // create items
-  addDimond(-6, -5, 9, "dimond1", [0, 0, 0], [0.5, 1, 1])
-  addBowl(-6, -5, 6, "bowl1", [0, 0, 0], [0.5, 1, 1])
-  addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/vase1.glb')
-  addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/chandelier4.glb')
-  addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/man1.glb')
-
-  // create picture
-  addPlane(-9.9, -5, 9, "plane1", [0, 1/2, 0], [2, 3, 3], 'src/kaleidoscope.jpg')
-  addBackgorund(-9.9, -3.5, 9, "ceiling", [0, 1/2, 0], [2, 0.3, 0.5], "src/frame.jpg");
-  addBackgorund(-9.9, -6.5, 9, "ceiling", [0, 1/2, 0], [2, 0.3, 0.5], "src/frame.jpg");
-  addBackgorund(-9.9, -5, 10, "ceiling", [0, 1/2, 0], [0.3, 3.3, 0.5], "src/frame.jpg");
-  addBackgorund(-9.9, -5, 8, "ceiling", [0, 1/2, 0], [0.3, 3.3, 0.5], "src/frame.jpg");
-}
-
 function createLight(){
   const light = new THREE.AmbientLight(0xfff0dd, 1);
   // light.position.set(0, 5, 10);
@@ -99,26 +64,26 @@ function createLight(){
   scene.add(spotLight);
 }
 
-function addBackgorund(x, y, z, name, angle, size, texture="src/wall.jpg"){
+function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.jpg"){
   const bgTexture = new THREE.TextureLoader().load(texture);
   const bgGeometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
   const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
-  objList[name] = new object(bgGeometry, bgMaterial, name)
-  objList[name].setPosition(x, y, z)
-  objList[name].addToScene(scene)
-  objList[name].setRotation(angle)
+  objList[location][name] = new object(bgGeometry, bgMaterial, `${location}-${name}`)
+  objList[location][name].setPosition(x, y, z)
+  objList[location][name].addToScene(scene)
+  objList[location][name].setRotation(angle)
 }
 
-function addShowcase(x, y, z, name, angle, size){
+function addShowcase(x, y, z, name, angle, size, location){
   const texture = new THREE.TextureLoader().load("src/showcase.jpg");
   const geometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
   const material = new THREE.MeshBasicMaterial({ map: texture });
-  objList[name] = new object(geometry, material, name)
-  objList[name].setPosition(x, y, z)
-  objList[name].addToScene(scene)
+  objList[location][name] = new object(geometry, material, `${location}-${name}`);
+  objList[location][name].setPosition(x, y, z);
+  objList[location][name].addToScene(scene);
 }
 
-function addDimond(x, y, z, name, angle, size){
+function addDiamond(x, y, z, name, angle, size, location){
   const geometry = new THREE.IcosahedronGeometry(0.5, 0);
   const material = new THREE.MeshPhysicalMaterial({
     metalness: 0,  
@@ -127,12 +92,12 @@ function addDimond(x, y, z, name, angle, size){
     transmission: 1
   });
   material.transmission = 1;
-  objList[name] = new object(geometry, material, name)
-  objList[name].setPosition(x, y, z)
-  objList[name].addToScene(scene)
+  objList[location][name] = new object(geometry, material, `${location}-${name}`);
+  objList[location][name].setPosition(x, y, z);
+  objList[location][name].addToScene(scene);
 }
 
-function addBowl(x, y, z, name, angle, size){
+function addBowl(x, y, z, name, angle, size, location){
   const points = [];
   for ( let i = 0; i < 10; i ++ ) {
     points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
@@ -144,61 +109,39 @@ function addBowl(x, y, z, name, angle, size){
     thickness: 0.5,
     transmission: 1
   });
-  objList[name] = new object(geometry, material, name)
-  objList[name].setScale(0.05, 0.05, 0.05);
-  objList[name].setPosition(x, y, z)
-  objList[name].addToScene(scene)
+  objList[location][name] = new object(geometry, material, `${location}-${name}`)
+  objList[location][name].setScale(0.05, 0.05, 0.05);
+  objList[location][name].setPosition(x, y, z)
+  objList[location][name].addToScene(scene)
 }
 
-function addGlb(x, y, z, name, angle, size, glbfile){
+function addGlb(x, y, z, name, angle, size, glbfile, location){
   const loader = new THREE.GLTFLoader();
   const glb = loader.load( glbfile, function ( gltf ){
     vase = gltf.scene;
     vase.position.set(x, y, z);
     vase.scale.set(size[0], size[1], size[2]);
-    vase.name = name;
+    vase.name = `${location}-${name}`;
     vase.rotation.y = Math.PI * angle[1];
     scene.add(vase);
-    objList[name] = vase;
+    objList[location][name] = vase;
+    console.log(objList[location][name]);
   } );
 }
 
-function addPlane(x, y, z, name, angle, size, texture){
+function addPlane(x, y, z, name, angle, size, texture, location){
   const bgTexture = new THREE.TextureLoader().load(texture);
   const bgGeometry = new THREE.PlaneGeometry(size[0], size[1]);
   const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture, side: THREE.DoubleSide });
-  objList[name] = new object(bgGeometry, bgMaterial, name)
-  objList[name].setPosition(x, y, z)
-  objList[name].addToScene(scene)
-  objList[name].setRotation(angle)
+  objList[location][name] = new object(bgGeometry, bgMaterial, `${location}-${name}`)
+  objList[location][name].setPosition(x, y, z)
+  objList[location][name].addToScene(scene)
+  objList[location][name].setRotation(angle)
 }
 
-function animate() {
-    objList["dimond1"].mesh.rotation.x += 0.01;
-    objList["dimond1"].mesh.rotation.y += 0.01;
-    objList["bowl1"].mesh.rotation.x += 0.01;
-    objList["bowl1"].mesh.rotation.y += 0.01;
-    objList["chandelier"].rotation.y += 0.01;
-    objList["vase1"].rotation.y += 0.01;
-    // cube.position.x += 0.01;
-    // camera.lookAt(cube.position)
-    // angle += 0.005;
-    // var x = 5 * Math.sin(angle);
-    // var z = 3 * Math.cos(angle);
-    // objList["cube"].mesh.position.set(x, 0, z);
-    // camera.position.set(x, 0, z*3);
-    // camera.position.z += 0.01
-};
-
-function render(){
-    requestAnimationFrame( render );
-    animate();
-    // controls.update();
-    renderer.render( scene, camera );
-}
 
 initScene();
-createObject();
+// createObject();
 createLight();
 // addBackgorund();
-render();
+// render();

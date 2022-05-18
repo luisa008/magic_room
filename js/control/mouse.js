@@ -12,6 +12,5 @@ function onclick(event) {
     if (intersects.length > 0) {
         var selectedObject = intersects[0];
         console.log(selectedObject["object"]);
-        console.log(objList["vase1"]);
     }
 }
