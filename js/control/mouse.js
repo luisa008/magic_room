@@ -18,12 +18,16 @@ function onclick(event) {
         var location = selected.name.substring(0, selected.name.indexOf("-"));
         var name = selected.name.substring(selected.name.indexOf("-")+1);
         if (objList[location][name].clickable) {
-            /* Judge what object it is */
+            /**
+             * Add the click effect here. 
+             * First Judge what object it is.
+             */
             if ("icecube" == name.substring(0, 7)) {
                 if (objList[location][name].click()) {
                     selected.material = new THREE.MeshPhysicalMaterial({
                         metalness: 0,
-                        roughness: 0
+                        roughness: 0,
+                        color: new THREE.Color( 0xffffff ).setHex( Math.random() * 0xffffff )
                     });
                 } else {
                     selected.material = objList[location][name].material;
