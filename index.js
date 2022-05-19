@@ -13,6 +13,18 @@ let angle = 0;
 let scene, renderer, camera;
 let vase;
 
+const glassTool = {};
+glassTool["normalMapTexture"] = new THREE.TextureLoader().load("src/normal.jpg");
+glassTool["normalMapTexture"].wrapS = THREE.RepeatWrapping;
+glassTool["normalMapTexture"].wrapT = THREE.RepeatWrapping;
+glassTool["normalMapTexture"].repeat.set(1, 1);
+glassTool["hdrEquirect"]  = new THREE.RGBELoader().load(
+  "src/empty_warehouse_01_2k.hdr",
+  () => {
+    glassTool["hdrEquirect"].mapping = THREE.EquirectangularReflectionMapping;
+  }
+);
+
 // Basic scene
 function initScene(){
   scene = new THREE.Scene();
@@ -53,21 +65,28 @@ class object {
     setScale(x=1, y=1, z=1){
       this.mesh.scale.set(x, y, z)
     }
+    setCastShadow() {
+      this.mesh.castShadow = true;
+    }
+    setReceiveShadow() {
+      this.mesh.receiveShadow = true;
+    }
   }
 
 function createLight(){
-  const light = new THREE.AmbientLight(0xfff0dd, 1);
-  light.position.set(0, 5, 10);
-  scene.add(light);
+  // const light = new THREE.AmbientLight(0xfff0dd, 1);
+  // light.position.set(0, 5, 10);
+  // scene.add(light);
   const spotLight = new THREE.SpotLight( 0xffffff );
   spotLight.intensity = 1;
   spotLight.position.set( 500, 500, 500 );
+  spotLight.castShadow = true;
   scene.add(spotLight);
 
-  const spotLight2 = new THREE.SpotLight( 0xffffff );
-  spotLight2.intensity = 1;
-  spotLight2.position.set( 0, 0, -25 );
-  scene.add(spotLight2);
+  // const spotLight2 = new THREE.SpotLight( 0xffffff );
+  // spotLight2.intensity = 1;
+  // spotLight2.position.set( 0, 0, -25 );
+  // scene.add(spotLight2);
 }
 
 function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.jpg"){
@@ -75,9 +94,10 @@ function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.j
   const bgGeometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
   const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture });
   objList[location][name] = new object(bgGeometry, bgMaterial, `${location}-${name}`)
-  objList[location][name].setPosition(x, y, z)
-  objList[location][name].addToScene(scene)
-  objList[location][name].setRotation(angle)
+  objList[location][name].setPosition(x, y, z);
+  // objList[location][name].setReceiveShadow();
+  objList[location][name].addToScene(scene);
+  objList[location][name].setRotation(angle);
 }
 
 function addShowcase(x, y, z, name, angle, size, location){
@@ -86,6 +106,7 @@ function addShowcase(x, y, z, name, angle, size, location){
   const material = new THREE.MeshBasicMaterial({ map: texture });
   objList[location][name] = new object(geometry, material, `${location}-${name}`);
   objList[location][name].setPosition(x, y, z);
+  // objList[location][name].setReceiveShadow();
   objList[location][name].addToScene(scene);
 }
 
@@ -100,6 +121,7 @@ function addDiamond(x, y, z, name, angle, size, location){
   material.transmission = 1;
   objList[location][name] = new object(geometry, material, `${location}-${name}`);
   objList[location][name].setPosition(x, y, z);
+  // objList[location][name].setCastShadow();
   objList[location][name].addToScene(scene);
 }
 

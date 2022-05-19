@@ -3,15 +3,20 @@ addBackgorund(0, 0, -30, "backwall", [0, 0, 0], [20, 20, 0.1], "room2", "src/kal
 addBackgorund(-10, 0, -15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
 addBackgorund(10, 0, -15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
 
+class IceCube extends object {
+    constructor(geometry, material, name, axis, rotateTime, clickable=true) {
+        super(geometry, material, name, clickable);
+        this.axis = axis;
+        this.rotateTime = rotateTime;
+    }
+}
+
 function addIceCube(x, y, z, idx, location){
-    const textureLoader = new THREE.TextureLoader();
-    const normalMapTexture = textureLoader.load("src/normal.jpg");
-    normalMapTexture.wrapS = THREE.RepeatWrapping;
-    normalMapTexture.wrapT = THREE.RepeatWrapping;
-    normalMapTexture.repeat.set(1, 1);
     const BASE_SIZE = 2;
     const geometry = new THREE.BoxGeometry(BASE_SIZE, BASE_SIZE, BASE_SIZE);
     const material = new THREE.MeshPhysicalMaterial({
+        envMap: glassTool["hdrEquirect"],
+        envMapIntensity: 1.5,
         metalness: 0, 
         roughness: 0.05,
         thickness: 1.2,
@@ -19,22 +24,41 @@ function addIceCube(x, y, z, idx, location){
         clearcoat: 1,
         clearcoatRoughness: 0.1,
         normalScale: new THREE.Vector2(1),
-        normalMap: normalMapTexture,
-        clearcoatNormalMap: normalMapTexture,
+        normalMap: glassTool["normalMapTexture"],
+        clearcoatNormalMap: glassTool["normalMapTexture"],
         clearcoatNormalScale: new THREE.Vector2(0.3)
     });
-    material.transmission = 1;
     var name = `icecube${idx}`;
-    objList[location][name] = new object(geometry, material, `${location}-${name}`);
+    
+    var axis = new THREE.Vector3(
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1
+    );
+    var rotateTime = 5 + 15 * Math.random();
+    
+    objList[location][name] = new IceCube(geometry, material, `${location}-${name}`, axis, rotateTime);
     objList[location][name].setPosition(x, y, z);
+    // objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
 }
+
+function addRoom2Light() {
+    var spotLight = new THREE.SpotLight(0xffffff, 1, 200, 30, 0.1);
+    spotLight.position.set( 0, 20, -25 );
+    // spotLight.castShadow = true;
+    scene.add( spotLight );
+}
+
+
 
 addIceCube(0, -5, -25, 0, "room2");
 function room2Animate() {
     objList["room2"]["icecube0"].mesh.rotation.x += 0.01;
 }
+console.log(objList["room2"]["icecube0"]);
 
+addRoom2Light();
 // function addIceCubes() {
 //     const MESH_COUNT = 500;
 //     const textureLoader = new THREE.TextureLoader();
