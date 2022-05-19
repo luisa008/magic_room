@@ -32,7 +32,7 @@ document.addEventListener('keydown', (e) => {
 
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
-        console.log(camera.position);
+        // console.log(camera.position);
     }
     else if (e.code == "ArrowUp" || e.code == "ArrowDown" || e.code == "ArrowLeft" || e.code == "ArrowRight") {
         /* Eye Direction Rotation */

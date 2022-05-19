@@ -63,6 +63,11 @@ function createLight(){
   spotLight.intensity = 1;
   spotLight.position.set( 500, 500, 500 );
   scene.add(spotLight);
+
+  const spotLight2 = new THREE.SpotLight( 0xffffff );
+  spotLight2.intensity = 1;
+  spotLight2.position.set( 0, 0, -25 );
+  scene.add(spotLight2);
 }
 
 function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.jpg"){

@@ -4,17 +4,24 @@ addBackgorund(-10, 0, -15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room2", "src
 addBackgorund(10, 0, -15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
 
 function addIceCube(x, y, z, idx, location){
-    // const textureLoader = new THREE.TextureLoader();
-    // const normalMapTexture = textureLoader.load("src/normal.jpg");
-    // normalMapTexture.wrapS = THREE.RepeatWrapping;
-    // normalMapTexture.wrapT = THREE.RepeatWrapping;
-    // normalMapTexture.repeat.set(1, 1);
-    const BASE_SIZE = 2
+    const textureLoader = new THREE.TextureLoader();
+    const normalMapTexture = textureLoader.load("src/normal.jpg");
+    normalMapTexture.wrapS = THREE.RepeatWrapping;
+    normalMapTexture.wrapT = THREE.RepeatWrapping;
+    normalMapTexture.repeat.set(1, 1);
+    const BASE_SIZE = 2;
     const geometry = new THREE.BoxGeometry(BASE_SIZE, BASE_SIZE, BASE_SIZE);
     const material = new THREE.MeshPhysicalMaterial({
-      roughness: 0.05,
-      thickness: 1.2,
-      transmission: 1
+        metalness: 0, 
+        roughness: 0.05,
+        thickness: 1.2,
+        transmission: 1,
+        clearcoat: 1,
+        clearcoatRoughness: 0.1,
+        normalScale: new THREE.Vector2(1),
+        normalMap: normalMapTexture,
+        clearcoatNormalMap: normalMapTexture,
+        clearcoatNormalScale: new THREE.Vector2(0.3)
     });
     material.transmission = 1;
     var name = `icecube${idx}`;
@@ -23,8 +30,7 @@ function addIceCube(x, y, z, idx, location){
     objList[location][name].addToScene(scene);
 }
 
-addIceCube(0, 5, -10, 0, "room2");
-
+addIceCube(0, -5, -25, 0, "room2");
 function room2Animate() {
     objList["room2"]["icecube0"].mesh.rotation.x += 0.01;
 }
