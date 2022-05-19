@@ -17,7 +17,7 @@ let vase;
 function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  camera.position.z = 20;
+  camera.position.z = -5;
   camera.position.y = -5;
 
   renderer = new THREE.WebGLRenderer();
@@ -28,11 +28,12 @@ function initScene(){
 
 // create scene
 class object {  
-    constructor(geometry, material, name="") {
+    constructor(geometry, material, name="", clickable=false) {
       this.geometry = geometry;
       this.material = material;
       this.mesh = new THREE.Mesh( this.geometry, this.material );
       this.mesh.name = name;
+      this.clickable = clickable;
       // this.mesh.position.set(1, 1, 1)
     }
     addToScene(scene) {
@@ -56,7 +57,7 @@ class object {
 
 function createLight(){
   const light = new THREE.AmbientLight(0xfff0dd, 1);
-  // light.position.set(0, 5, 10);
+  light.position.set(0, 5, 10);
   scene.add(light);
   const spotLight = new THREE.SpotLight( 0xffffff );
   spotLight.intensity = 1;
@@ -125,7 +126,6 @@ function addGlb(x, y, z, name, angle, size, glbfile, location){
     vase.rotation.y = Math.PI * angle[1];
     scene.add(vase);
     objList[location][name] = vase;
-    console.log(objList[location][name]);
   } );
 }
 
