@@ -82,9 +82,9 @@ class object {
   }
 
 function createLight(){
-  // const light = new THREE.AmbientLight(0xfff0dd, 1);
-  // light.position.set(0, 5, 10);
-  // scene.add(light);
+  const light = new THREE.AmbientLight(0xfff0dd, 1);
+  light.position.set(0, 5, 10);
+  scene.add(light);
   const spotLight = new THREE.SpotLight( 0xffffff );
   spotLight.intensity = 1;
   spotLight.position.set( 500, 500, 500 );
