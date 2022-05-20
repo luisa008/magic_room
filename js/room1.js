@@ -3,6 +3,7 @@ function room1CreateObject(){
     addBackgorund(0, 4, 0, "backwall1", [0, 0, 0], [20, 12, 0.1], "room1");
     addBackgorund(5, -6, 0, "backwall2", [0, 0, 0], [10, 8, 0.1], "room1");
     addBackgorund(-7.5, -6, 0, "backwall3", [0, 0, 0], [5, 8, 0.1], "room1");
+    // addBackgorund(-2.5, -6, 0, "door", [0, 0, 0], [5, 8, 0.1], "room1");
     addBackgorund(-10, 0, 15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room1");
     addBackgorund(10, 0, 15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room1");
     addBackgorund(0, -10, 15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room1", "src/floor.jpg");
