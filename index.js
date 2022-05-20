@@ -11,7 +11,8 @@ const objList = {
 };
 let angle = 0;
 let scene, renderer, camera;
-let vase, pivot;
+let pivot;
+let clock = new THREE.Clock();
 
 /* For glass effect */
 const glassTool = {};

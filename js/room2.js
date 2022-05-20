@@ -11,6 +11,10 @@ function addRoom2Light() {
 }
 
 function room2Animate() {
+    if (driveMixer) {
+        const delta = clock.getDelta();
+        driveMixer.update( delta );
+    }
     for (let i = 0; i < ICECUBE_NUM; i++) {
         var icecube = objList["room2"][`icecube${i}`];
         icecube.mesh.rotation.x += icecube.rotateDelta.x;
@@ -37,8 +41,31 @@ for (let i = 0 ; i < ICECUBE_NUM; i++) {
     var z = 3 + (-1 + 2 * Math.random()) -27;
     addIceCube(x, y, z, i, "room2", rotateDelta, scale);
 }
+
+let driveMixer = null;
 /* GLB */
-addGlb(-6, -5, -15, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2", true);
+async function addDrive(x, y, z, name, angle, size, glbfile, location){
+    const glb = new THREE.GLTFLoader().load( glbfile, function ( gltf ){
+    const model = gltf.scene;
+    model.position.set(x, y, z);
+    model.scale.set(size[0], size[1], size[2]);
+    model.name = `${location}-${name}`;
+    model.rotation.x = Math.PI * angle[0];
+    model.rotation.y = Math.PI * angle[1];
+    model.rotation.z = Math.PI * angle[2];
+    scene.add(model);
+    objList[location][name] = model;
+    
+    traverseChildren(model, addBloomEffect);
+    
+    driveMixer = new THREE.AnimationMixer( model );
+    const clip = gltf.animations[0];
+    driveMixer.clipAction( clip.optimize() ).play();
+    } );
+}
+
+addDrive(-6, -5, -15, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2");
+
 
 /* Light */
 addRoom2Light();

@@ -57,10 +57,9 @@ function addBowl(x, y, z, name, angle, size, location){
     objList[location][name].addToScene(scene)
 }
   
-function addGlb(x, y, z, name, angle, size, glbfile, location, isBloom=false){
-    const loader = new THREE.GLTFLoader();
-    const glb = loader.load( glbfile, function ( gltf ){
-      glbModel = gltf.scene;
+async function addGlb(x, y, z, name, angle, size, glbfile, location, isBloom=false){
+    const glb = new THREE.GLTFLoader().load( glbfile, function ( gltf ){
+      let glbModel = gltf.scene;
       glbModel.position.set(x, y, z);
       glbModel.scale.set(size[0], size[1], size[2]);
       glbModel.name = `${location}-${name}`;
