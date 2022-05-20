@@ -7,7 +7,8 @@
 // parameter
 const objList = {
   "room1": {},
-  "room2": {}
+  "room2": {},
+  "room3": {}
 };
 let angle = 0;
 let scene, renderer, camera;
@@ -31,7 +32,7 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // camera.position.z = 20;
-  camera.position.z = -5;
+  camera.position.z = 15;
   camera.position.y = -5;
   camera.layers.enable(0);
   camera.layers.enable(1);
@@ -105,14 +106,23 @@ function createLight(){
   const pointLight = new THREE.PointLight( 0xffffff );
   pointLight.position.set(0, 0, 15);
   pointLight.intensity = 1.2;
+  pointLight.distance = 50;
   pointLight.castShadow = true;
   scene.add(pointLight);
 
   const pointLight2 = new THREE.PointLight( 0xffffff );
   pointLight2.position.set(0, 5, -15);
   pointLight2.intensity = 0.3;
+  pointLight2.distance = 50;
   pointLight2.castShadow = true;
   scene.add(pointLight2);
+
+  const pointLight3 = new THREE.PointLight( 0xffffff );
+  pointLight3.position.set(20, 0, 15);
+  pointLight3.intensity = 1;
+  pointLight3.distance = 50;
+  pointLight3.castShadow = true;
+  scene.add(pointLight3);
 }
 
 function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.jpg"){
