@@ -13,6 +13,7 @@ let angle = 0;
 let scene, renderer, camera;
 let vase, pivot;
 
+/* For glass effect */
 const glassTool = {};
 glassTool["normalMapTexture"] = new THREE.TextureLoader().load("src/normal.jpg");
 glassTool["normalMapTexture"].wrapS = THREE.RepeatWrapping;
@@ -29,11 +30,17 @@ glassTool["hdrEquirect"]  = new THREE.RGBELoader().load(
 function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  camera.position.z = 20;
+  // camera.position.z = 20;
+  camera.position.z = -5;
   camera.position.y = -5;
+  camera.layers.enable(0);
+  camera.layers.enable(1);
+  camera.layers.enable(2);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.autoClear = false;
+  // renderer.toneMapping = THREE.ReinhardToneMapping;
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -233,7 +240,5 @@ function addIceCube(x, y, z, idx, location, rotateDelta, scale){
 }
 
 initScene();
-// createObject();
 createLight();
-// addBackgorund();
-// render();
+
