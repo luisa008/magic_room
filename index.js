@@ -13,6 +13,7 @@ let angle = 0;
 let scene, renderer, camera;
 let vase;
 
+/* For glass effect */
 const glassTool = {};
 glassTool["normalMapTexture"] = new THREE.TextureLoader().load("src/normal.jpg");
 glassTool["normalMapTexture"].wrapS = THREE.RepeatWrapping;
@@ -25,13 +26,12 @@ glassTool["hdrEquirect"]  = new THREE.RGBELoader().load(
   }
 );
 
-const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
-
 // Basic scene
 function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-  camera.position.z = 20;
+  // camera.position.z = 20;
+  camera.position.z = -5;
   camera.position.y = -5;
   camera.layers.enable(0);
   camera.layers.enable(1);

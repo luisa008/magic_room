@@ -52,31 +52,6 @@ addRoom2Light();
 // // objList["room2"]["drive"].mesh.layers.enable( BLOOM_SCENE );
 // console.log(objList["room2"]);
 
-let bloomComposer = null;
-function addBloomPass() {
-    // RenderPass这个通道会渲染场景，但不会将渲染结果输出到屏幕上
-    const renderScene = new THREE.RenderPass(scene, camera)
-    const effectCopy = new THREE.ShaderPass(THREE.CopyShader); //传入了CopyShader着色器，用于拷贝渲染结果
-    effectCopy.renderToScreen = true;
-    // THREE.BloomPass(strength, kernelSize, sigma, Resolution)
-    // strength 定义泛光效果的强度，值越高，明亮的区域越明亮，而且渗入较暗区域的也就越多
-    // kernelSize 控制泛光的偏移量
-    // sigma 控制泛光的锐利程度，值越高，泛光越模糊
-    // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
-    const bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 ) //BloomPass通道效果
-    bloomPass.threshold = 0;
-    bloomPass.strength = 1.5;
-    bloomPass.radius = 0;
-    bloomPass.renderToScreen = true;
-    //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
-    bloomComposer = new THREE.EffectComposer(renderer)
-    bloomComposer.setSize(window.innerWidth, window.innerHeight);
-    bloomComposer.addPass(renderScene);
-    bloomComposer.addPass(bloomPass);
-    bloomComposer.addPass(effectCopy);
-    bloomComposer.render();
-}
-addBloomPass();
 function addCubes() {
     // 创建两个box， 将box进行layers进行分层是重要代码，camera默认渲染0层
     // let texture = new THREE.TextureLoader().load("./backav9.jpg")
@@ -89,7 +64,7 @@ function addCubes() {
     });
     var cube1 = new THREE.Mesh(geometry1, material1);
     // 重要代码，将当前创建的box分配到0层
-    cube1.layers.set(0);
+    // cube1.layers.set(0);
     cube1.layers.enable(0);
     cube1.position.set(-6, -5, -9);
     scene.add(cube1);
@@ -101,7 +76,7 @@ function addCubes() {
     });
     var cube2 = new THREE.Mesh(geometry2, material2);
     // 重要代码，将当前创建的box分配到1层
-    cube2.layers.set(1);
+    // cube2.layers.set(1);
     cube2.layers.enable(1);
     cube2.position.set(6, -5, -9);
     scene.add(cube2);
@@ -113,9 +88,28 @@ function addCubes() {
     });
     var cube3 = new THREE.Mesh(geometry3, material3);
     // 重要代码，将当前创建的box分配到1层
-    cube3.layers.set(2);
+    // cube3.layers.set(2);
     cube3.layers.enable(2);
     cube3.position.set(6, -5, -12);
     scene.add(cube3);
 }
 addCubes();
+
+const bloomLayer = createLayer(1); // 建立一個新的圖層，編號為1
+const materials = {};
+const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
+const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
+
+function darkenNonBloomed( obj ) {
+    if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
+        materials[ obj.uuid ] = obj.material;
+        obj.material = darkMaterial;
+    }
+}
+
+function restoreMaterial( obj ) {
+    if ( materials[ obj.uuid ] ) {
+        obj.material = materials[ obj.uuid ];
+        delete materials[ obj.uuid ];
+    }
+}
