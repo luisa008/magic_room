@@ -64,42 +64,28 @@
 		<script src="js/control/keyboard.js"></script>
 		<script src="js/control/mouse.js"></script>
 		<script>
-			function animate() {
-				room1Animate();
-				room2Animate();
-			}
-			// function render(){
-			// 	requestAnimationFrame( render );
-			// 	animate();
-				
-			// 	renderer.clear();
-			// 	camera.layers.set(1);
-			// 	if(bloomComposer) {
-			// 		// console.log("bloom");
-			// 		bloomComposer.render();
-			// 	}
-				
-			// 	// // 清除深度缓存
-			// 	renderer.clearDepth();
-			// 	camera.layers.set(0);
-
-			// 	renderer.render(scene, camera);
-			// }
 			function render(){
 				requestAnimationFrame( render );
-				animate();
+				
+				room1Animate();
+				room2Animate();
 		
-				// 實現區域性輝光
-				// 1. 利用 darkenNonBloomed 函式將除輝光物體外的其他物體的材質轉成黑色
 				scene.traverse(darkenNonBloomed);
-				// 2. 用 bloomComposer 產生輝光
 				bloomComposer.render();
-				// 3. 將轉成黑色材質的物體還原成初始材質
 				scene.traverse(restoreMaterial);
-				// 4. 用 finalComposer 作最後渲染
 				finalComposer.render();
 			}
+			
+			function onWindowResize() {
+				const width = window.innerWidth;
+				const height = window.innerHeight;
+				renderer.setSize( width, height );
+				bloomComposer.setSize( width, height );
+				finalComposer.setSize( width, height );
+			}
+
 			render();
+			window.addEventListener( 'resize', onWindowResize );
 		</script>
 	</body>
 </html>

@@ -15,7 +15,7 @@ function createUnrealBloomPass() {
     const params = {
         exposure: 1,
         bloomThreshold: 0,
-        bloomStrength: 1.5, // 輝光強度
+        bloomStrength: 1, // 輝光強度
         bloomRadius: 0,
     };
     bloomPass.threshold = params.bloomThreshold;
@@ -81,6 +81,14 @@ function restoreMaterial( obj ) {
     }
 }
 
-function addBloomEffect(objMesh) {
-    objMesh.enable(BLOOM_LAYER);
+function addBloomEffect(obj) {
+    if (obj.isMesh) {
+        obj.layers.enable(BLOOM_LAYER);
+    }
+}
+
+function toggleBloomEffect(obj) {
+    if (obj.isMesh) {
+        obj.layers.toggle(BLOOM_LAYER);
+    }
 }
