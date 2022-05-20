@@ -36,17 +36,19 @@ function initScene(){
   renderer.setSize( window.innerWidth, window.innerHeight );
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
   document.body.appendChild( renderer.domElement );
 }
 
 // create scene
 class object {  
-    constructor(geometry, material, name="", clickable=false) {
+    constructor(geometry, material, name="", clickable=false, clicked=false) {
       this.geometry = geometry;
       this.material = material;
       this.mesh = new THREE.Mesh( this.geometry, this.material );
       this.mesh.name = name;
       this.clickable = clickable;
+      this.clicked = clicked;
       // this.mesh.position.set(1, 1, 1)
     }
     addToScene(scene) {
@@ -71,6 +73,13 @@ class object {
     }
     setReceiveShadow() {
       this.mesh.receiveShadow = true;
+    }
+    click() {
+      if (this.clickable) {
+        this.clicked = ! this.clicked;
+        return this.clicked;
+      }
+      return false;
     }
   }
 
@@ -154,7 +163,8 @@ function addBowl(x, y, z, name, angle, size, location){
     thickness: 0.5,
     transmission: 1
   });
-  objList[location][name] = new object(geometry, material, `${location}-${name}`)
+  // name = `${location}-${name}`;
+  objList[location][name] = new object(geometry, material, `${location}-${name}`);
   objList[location][name].setScale(0.05, 0.05, 0.05);
   objList[location][name].setPosition(x, y, z)
   objList[location][name].setCastShadow();
@@ -179,12 +189,47 @@ function addPlane(x, y, z, name, angle, size, texture, location){
   const bgTexture = new THREE.TextureLoader().load(texture);
   const bgGeometry = new THREE.PlaneGeometry(size[0], size[1]);
   const bgMaterial = new THREE.MeshStandardMaterial({ map: bgTexture, side: THREE.DoubleSide });
-  objList[location][name] = new object(bgGeometry, bgMaterial, `${location}-${name}`)
-  objList[location][name].setPosition(x, y, z)
-  objList[location][name].addToScene(scene)
-  objList[location][name].setRotation(angle)
+  // name = `${location}-${name}`;
+  objList[location][name] = new object(bgGeometry, bgMaterial, `${location}-${name}`);
+  objList[location][name].setPosition(x, y, z);
+  objList[location][name].addToScene(scene);
+  objList[location][name].setRotation(angle);
 }
 
+class IceCube extends object {
+  static baseSize = 1;
+  constructor(geometry, material, name, rotateDelta, scale, clickable=true) {
+      super(geometry, material, name, clickable);
+      this.rotateDelta = rotateDelta;
+      this.scale = scale;
+      this.setScale(scale, scale, scale);
+  }
+}
+
+function addIceCube(x, y, z, idx, location, rotateDelta, scale){
+  // const geometry = new THREE.BoxGeometry(IceCube.baseSize, IceCube.baseSize, IceCube.baseSize);
+  const geometry = new THREE.RoundedBoxGeometry(IceCube.baseSize, IceCube.baseSize, IceCube.baseSize, IceCube.baseSize/5, 4);
+  
+  const material = new THREE.MeshPhysicalMaterial({
+      envMap: glassTool["hdrEquirect"],
+      envMapIntensity: 1.5,
+      metalness: 0, 
+      roughness: 0.1,
+      thickness: 1.2,
+      transmission: 1,
+      // clearcoat: 1,
+      // clearcoatRoughness: 0.1,
+      // normalScale: new THREE.Vector2(1),
+      // normalMap: glassTool["normalMapTexture"],
+      // clearcoatNormalMap: glassTool["normalMapTexture"],
+      // clearcoatNormalScale: new THREE.Vector2(0.3)
+  });
+  var name = `icecube${idx}`;
+  objList[location][name] = new IceCube(geometry, material, `${location}-${name}`, rotateDelta, scale);
+  objList[location][name].setPosition(x, y, z);
+  // objList[location][name].setCastShadow();
+  objList[location][name].addToScene(scene);
+}
 
 initScene();
 // createObject();

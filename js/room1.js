@@ -27,9 +27,9 @@ function room1CreateObject(){
     // create items
     addDiamond(-6, -5, 9, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
     addBowl(-6, -5, 6, "bowl1", [0, 0, 0], [0.5, 1, 1], "room1");
-    addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/vase1.glb', "room1");
-    addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/chandelier4.glb', "room1");
-    addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/man1.glb', "room1");
+    addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room1");
+    addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/models/chandelier4.glb', "room1");
+    addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/models/man1.glb', "room1");
   
     // create picture
     addPlane(-9.9, -5, 9, "plane1", [0, 1/2, 0], [2, 3, 3], 'src/kaleidoscope.jpg', "room1");
