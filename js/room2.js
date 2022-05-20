@@ -45,29 +45,27 @@ for (let i = 0 ; i < ICECUBE_NUM; i++) {
 // addIceCube(0, -3, -25, 0, "room2", new THREE.Vector3(0.01, 0, 0), 0.5);
 
 /* GLB */
-//addGlb(-6, -5, -9, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2");
+addGlb(-6, -5, -9, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2", true);
 addRoom2Light();
 
-// const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
-// // objList["room2"]["drive"].mesh.layers.enable( BLOOM_SCENE );
-// console.log(objList["room2"]);
+
 
 function addCubes() {
     // 创建两个box， 将box进行layers进行分层是重要代码，camera默认渲染0层
     // let texture = new THREE.TextureLoader().load("./backav9.jpg")
     // let texture1 = new THREE.TextureLoader().load("./py.png")
     let color = new THREE.Color();
-	color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
-    var geometry1 = new THREE.BoxGeometry(1, 1, 1);
-    var material1 = new THREE.MeshBasicMaterial({
-      color: color
-    });
-    var cube1 = new THREE.Mesh(geometry1, material1);
-    // 重要代码，将当前创建的box分配到0层
-    // cube1.layers.set(0);
-    cube1.layers.enable(0);
-    cube1.position.set(-6, -5, -9);
-    scene.add(cube1);
+	// color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
+    // var geometry1 = new THREE.BoxGeometry(1, 1, 1);
+    // var material1 = new THREE.MeshBasicMaterial({
+    //   color: color
+    // });
+    // var cube1 = new THREE.Mesh(geometry1, material1);
+    // // 重要代码，将当前创建的box分配到0层
+    // // cube1.layers.set(0);
+    // cube1.layers.enable(0);
+    // cube1.position.set(-6, -5, -9);
+    // scene.add(cube1);
     
     color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
     var geometry2 = new THREE.BoxGeometry(1, 1, 1);
@@ -94,22 +92,3 @@ function addCubes() {
     scene.add(cube3);
 }
 addCubes();
-
-const bloomLayer = createLayer(1); // 建立一個新的圖層，編號為1
-const materials = {};
-const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
-const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
-
-function darkenNonBloomed( obj ) {
-    if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
-        materials[ obj.uuid ] = obj.material;
-        obj.material = darkMaterial;
-    }
-}
-
-function restoreMaterial( obj ) {
-    if ( materials[ obj.uuid ] ) {
-        obj.material = materials[ obj.uuid ];
-        delete materials[ obj.uuid ];
-    }
-}

@@ -14,8 +14,8 @@ function createUnrealBloomPass() {
     );
     const params = {
         exposure: 1,
-        bloomThreshold: 0.2,
-        bloomStrength: 0.5, // 輝光強度
+        bloomThreshold: 0,
+        bloomStrength: 1.5, // 輝光強度
         bloomRadius: 0,
     };
     bloomPass.threshold = params.bloomThreshold;
@@ -60,30 +60,27 @@ function createShaderPass(bloomComposer) {
     return shaderPass;
 }
 
-// /* For Bloom Effect */
-// const bloomTool = {
-//   "NORMAL": 0,
-//   "BLOOM": 1,
-//   "bloomLayer": createLayer(1),
-//   "materials": {},
-//   "darkMaterial": new THREE.MeshBasicMaterial({ color: "black" }),
-// };
+const NORMAL_LAYER = 0;
+const BLOOM_LAYER = 1;
+const bloomLayer = createLayer(BLOOM_LAYER); // 建立一個新的圖層，編號為1
+const materials = {};
+const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
+const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
 
-// const bloomLayer = createLayer(1); // 建立一個新的圖層，編號為1
-// const materials = {};
-// const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
-// const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
+function darkenNonBloomed( obj ) {
+    if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
+        materials[ obj.uuid ] = obj.material;
+        obj.material = darkMaterial;
+    }
+}
 
-// function darkenNonBloomed( obj ) {
-//     if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
-//         materials[ obj.uuid ] = obj.material;
-//         obj.material = darkMaterial;
-//     }
-// }
+function restoreMaterial( obj ) {
+    if ( materials[ obj.uuid ] ) {
+        obj.material = materials[ obj.uuid ];
+        delete materials[ obj.uuid ];
+    }
+}
 
-// function restoreMaterial( obj ) {
-//     if ( materials[ obj.uuid ] ) {
-//         obj.material = materials[ obj.uuid ];
-//         delete materials[ obj.uuid ];
-//     }
-// }
+function addBloomEffect(objMesh) {
+    objMesh.enable(BLOOM_LAYER);
+}
