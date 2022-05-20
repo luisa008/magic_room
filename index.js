@@ -11,7 +11,7 @@ const objList = {
 };
 let angle = 0;
 let scene, renderer, camera;
-let vase;
+let vase, pivot;
 
 const glassTool = {};
 glassTool["normalMapTexture"] = new THREE.TextureLoader().load("src/normal.jpg");
@@ -96,21 +96,16 @@ function createLight(){
   // scene.add(spotLight);
 
   const pointLight = new THREE.PointLight( 0xffffff );
-  pointLight.position.set(0, 10, 15);
-  pointLight.intensity = 1;
+  pointLight.position.set(0, 0, 15);
+  pointLight.intensity = 1.2;
   pointLight.castShadow = true;
   scene.add(pointLight);
 
-  // const pointLight2 = new THREE.PointLight( 0xffffff );
-  // pointLight2.position.set(0, 5, -15);
-  // pointLight2.intensity = 0.8
-  // pointLight2.castShadow = true;
-  // scene.add(pointLight2);
-
-  // const spotLight2 = new THREE.SpotLight( 0xffffff );
-  // spotLight2.intensity = 1;
-  // spotLight2.position.set( 0, 0, -25 );
-  // scene.add(spotLight2);
+  const pointLight2 = new THREE.PointLight( 0xffffff );
+  pointLight2.position.set(0, 5, -15);
+  pointLight2.intensity = 0.3;
+  pointLight2.castShadow = true;
+  scene.add(pointLight2);
 }
 
 function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.jpg"){
@@ -135,7 +130,7 @@ function addShowcase(x, y, z, name, angle, size, location){
 }
 
 function addDiamond(x, y, z, name, angle, size, location){
-  const geometry = new THREE.IcosahedronGeometry(0.5, 0);
+  const geometry = new THREE.IcosahedronGeometry(0.8, 0);
   const material = new THREE.MeshPhysicalMaterial({
     envMap: glassTool["hdrEquirect"],
     envMapIntensity: 1.5,
@@ -159,9 +154,9 @@ function addBowl(x, y, z, name, angle, size, location){
   const geometry = new THREE.LatheGeometry( points );
   const material = new THREE.MeshPhysicalMaterial({
     metalness: 0,  
-    roughness: 0.3,
+    roughness: 0.5,
     thickness: 0.5,
-    transmission: 1
+    transmission: 0.8
   });
   // name = `${location}-${name}`;
   objList[location][name] = new object(geometry, material, `${location}-${name}`);
@@ -194,6 +189,12 @@ function addPlane(x, y, z, name, angle, size, texture, location){
   objList[location][name].setPosition(x, y, z);
   objList[location][name].addToScene(scene);
   objList[location][name].setRotation(angle);
+}
+
+function addGroup(location, name){
+  pivot=new THREE.Group();
+  scene.add(pivot);
+  pivot.add(objList[location][name].mesh);
 }
 
 class IceCube extends object {

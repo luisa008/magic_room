@@ -13,9 +13,9 @@ function addRoom2Light() {
 
     const spotLight = new THREE.SpotLight( 0xffffff );
     spotLight.intensity = 0.5;
-    spotLight.target = objList["room2"]["icecube0"].mesh;
-    spotLight.position.set( 0, 5, -25 );
-    spotLight.angle = Math.PI/4;
+    spotLight.target = objList["room2"]["backwall"].mesh;
+    spotLight.position.set( 0, 0, 0 );
+    spotLight.angle = Math.PI/10;
     spotLight.castShadow = true;
     scene.add(spotLight);
 }
