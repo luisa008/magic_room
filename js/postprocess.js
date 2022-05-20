@@ -67,8 +67,12 @@ const materials = {};
 const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
 const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
 
+let flag = false;
 function darkenNonBloomed( obj ) {
     if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
+        if (flag) {
+            console.log(obj);
+        }
         materials[ obj.uuid ] = obj.material;
         obj.material = darkMaterial;
     }
@@ -81,6 +85,8 @@ function restoreMaterial( obj ) {
     }
 }
 
-function addBloomEffect(objMesh) {
-    objMesh.enable(BLOOM_LAYER);
+function addBloomEffect(obj) {
+    if (obj.isMesh) {
+        obj.layers.enable(BLOOM_LAYER);
+    }
 }

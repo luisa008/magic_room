@@ -60,21 +60,29 @@ function addBowl(x, y, z, name, angle, size, location){
 function addGlb(x, y, z, name, angle, size, glbfile, location, isBloom=false){
     const loader = new THREE.GLTFLoader();
     const glb = loader.load( glbfile, function ( gltf ){
-      vase = gltf.scene;
-      vase.position.set(x, y, z);
-      vase.scale.set(size[0], size[1], size[2]);
-      vase.name = `${location}-${name}`;
-      vase.rotation.x = Math.PI * angle[0];
-      vase.rotation.y = Math.PI * angle[1];
-      vase.rotation.z = Math.PI * angle[2];
-      scene.add(vase);
-      objList[location][name] = vase;
-      console.log(vase);
+      glbModel = gltf.scene;
+      glbModel.position.set(x, y, z);
+      glbModel.scale.set(size[0], size[1], size[2]);
+      glbModel.name = `${location}-${name}`;
+      glbModel.rotation.x = Math.PI * angle[0];
+      glbModel.rotation.y = Math.PI * angle[1];
+      glbModel.rotation.z = Math.PI * angle[2];
+      scene.add(glbModel);
+      objList[location][name] = glbModel;
       if (isBloom) {
-          console.log(vase.isMesh);
-        //   addBloomEffect(vase);
+        traverseChildren(glbModel, addBloomEffect);
       }
     } );
+}
+
+function traverseChildren(obj, handler) {
+    if (obj.type == "Mesh") {
+        handler(obj);
+    } else {
+        for (const child of obj.children) {
+            traverseChildren(child, handler);
+        }
+    }
 }
   
 function addPlane(x, y, z, name, angle, size, texture, location){
