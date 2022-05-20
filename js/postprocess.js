@@ -15,7 +15,7 @@ function createUnrealBloomPass() {
     const params = {
         exposure: 1,
         bloomThreshold: 0,
-        bloomStrength: 1.5, // 輝光強度
+        bloomStrength: 1, // 輝光強度
         bloomRadius: 0,
     };
     bloomPass.threshold = params.bloomThreshold;
@@ -67,12 +67,8 @@ const materials = {};
 const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" }); // 提前建立好黑色普通材質，供後面使用
 const { bloomComposer, finalComposer } = createComposer(); // 建立效果處理器
 
-let flag = false;
 function darkenNonBloomed( obj ) {
     if ( obj.isMesh && bloomLayer.test( obj.layers ) === false ) {
-        if (flag) {
-            console.log(obj);
-        }
         materials[ obj.uuid ] = obj.material;
         obj.material = darkMaterial;
     }
@@ -88,5 +84,11 @@ function restoreMaterial( obj ) {
 function addBloomEffect(obj) {
     if (obj.isMesh) {
         obj.layers.enable(BLOOM_LAYER);
+    }
+}
+
+function toggleBloomEffect(obj) {
+    if (obj.isMesh) {
+        obj.layers.toggle(BLOOM_LAYER);
     }
 }

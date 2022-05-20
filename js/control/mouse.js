@@ -1,5 +1,14 @@
 renderer.domElement.addEventListener("click", onclick, true);
+// renderer.domElement.addEventListener("mousemove", onHover, true);
 var raycaster = new THREE.Raycaster();
+// var lastHovered = undefined;
+function getMouseVec(event) {
+    var mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    return mouse;
+}
+
 function getObject(mouse) {
     raycaster.setFromCamera(mouse, camera);
     var intersects = raycaster.intersectObjects(scene.children, true); //array
@@ -8,16 +17,14 @@ function getObject(mouse) {
     }
     return undefined;
 }
+
 function onclick(event) {
-    // console.log(event);
-    var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    var selected = getObject(mouse);
+    var selected = getObject(getMouseVec(event));
     if (selected) {
-        console.log(selected);
         var location = selected.name.substring(0, selected.name.indexOf("-"));
         var name = selected.name.substring(selected.name.indexOf("-")+1);
+        console.log(location);
+        console.log(name);
         if (objList[location] && objList[location][name] && objList[location][name].clickable) {
             /**
              * Add the click effect here. 
@@ -34,6 +41,19 @@ function onclick(event) {
                     selected.material = objList[location][name].material;
                 }
             }
+            else if ("ring" == name.substring(0, 4)) {
+                console.log("hi");
+                toggleBloomEffect(objList[location][name].mesh);
+            }
         }
     }
 }
+
+// function onHover(event) {
+//     var selected = getObject(getMouseVec(event));
+//     // console.log(event);
+//     if (selected && lastHovered!==selected) {
+//         console.log(selected);
+//         lastHovered = selected;
+//     }
+// }

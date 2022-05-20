@@ -32,7 +32,7 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // camera.position.z = 20;
-  camera.position.z = -5;
+  camera.position.z = 0;
   camera.position.y = -5;
   camera.layers.enable(0);
   camera.layers.enable(1);
@@ -50,13 +50,14 @@ function initScene(){
 
 // create scene
 class object {  
-    constructor(geometry, material, name="", clickable=false, clicked=false) {
+    constructor(geometry, material, name="", clickable=false, hoverable=false) {
       this.geometry = geometry;
       this.material = material;
       this.mesh = new THREE.Mesh( this.geometry, this.material );
       this.mesh.name = name;
       this.clickable = clickable;
-      this.clicked = clicked;
+      this.hoverable = hoverable;
+      this.clicked = false;
       // this.mesh.position.set(1, 1, 1)
     }
     addToScene(scene) {
