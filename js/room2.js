@@ -12,17 +12,7 @@ const POINT_CLOUD_Z_OFFSET = -12;
 const spheres = [];
 let toggle = 0;
 let spheresIndex = 0;
-
-function addRoom2Light() {
-    // const spotLight = new THREE.SpotLight( 0xffffff );
-    // spotLight.intensity = 0.5;
-    // spotLight.target = objList["room2"]["backwall"].mesh;
-    // spotLight.position.set( 0, 0, 0 );
-    // spotLight.angle = Math.PI/10;
-    // spotLight.castShadow = true;
-    // scene.add(spotLight);
-}
-addRoom2Light();
+let driveMixer = null;
 
 function room2Animate() {
     if (driveMixer) {
@@ -72,7 +62,6 @@ for (let i = 0 ; i < ICECUBE_NUM; i++) {
     addIceCube(x, y, z, i, "room2", rotateDelta, scale);
 }
 
-let driveMixer = null;
 /* GLB */
 async function addDrive(x, y, z, name, angle, size, glbfile, location){
     const glb = new THREE.GLTFLoader().load( glbfile, function ( gltf ){
@@ -151,3 +140,15 @@ function addPointClouds() {
 }
 
 addPointClouds();
+
+
+function addRoom2Light() {
+    const spotLight = new THREE.SpotLight( 0xffffff );
+    spotLight.intensity = 0.5;
+    spotLight.target = objList["room2"]["backwall"].mesh;
+    spotLight.position.set( 0, 0, 0 );
+    spotLight.angle = Math.PI/10;
+    spotLight.castShadow = true;
+    scene.add(spotLight);
+}
+addRoom2Light();
