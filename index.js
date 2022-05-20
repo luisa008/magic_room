@@ -25,15 +25,22 @@ glassTool["hdrEquirect"]  = new THREE.RGBELoader().load(
   }
 );
 
+const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
+
 // Basic scene
 function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   camera.position.z = -5;
   camera.position.y = -5;
+  camera.layers.enable(0);
+  camera.layers.enable(1);
+  camera.layers.enable(2);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.autoClear = false;
+  // renderer.toneMapping = THREE.ReinhardToneMapping;
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
   document.body.appendChild( renderer.domElement );
 }
@@ -162,7 +169,9 @@ function addGlb(x, y, z, name, angle, size, glbfile, location){
     vase.position.set(x, y, z);
     vase.scale.set(size[0], size[1], size[2]);
     vase.name = `${location}-${name}`;
+    vase.rotation.x = Math.PI * angle[0];
     vase.rotation.y = Math.PI * angle[1];
+    vase.rotation.z = Math.PI * angle[2];
     scene.add(vase);
     objList[location][name] = vase;
   } );

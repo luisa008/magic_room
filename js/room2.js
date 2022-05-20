@@ -1,9 +1,4 @@
-const ICECUBE_NUM = 100;
-
-addBackgorund(0, -10, -15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room2", "src/floor2.jpg");
-addBackgorund(0, 0, -30, "backwall", [0, 0, 0], [20, 20, 0.1], "room2", "src/texture2.jpg");
-addBackgorund(-10, 0, -15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
-addBackgorund(10, 0, -15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
+const ICECUBE_NUM = 200;
 
 function addRoom2Light() {
     var spotLight = new THREE.SpotLight(0xffffff, 1, 200, 30, 0.1);
@@ -12,6 +7,21 @@ function addRoom2Light() {
     scene.add( spotLight );
 }
 
+function room2Animate() {
+    for (let i = 0; i < ICECUBE_NUM; i++) {
+        var icecube = objList["room2"][`icecube${i}`];
+        icecube.mesh.rotation.x += icecube.rotateDelta.x;
+        icecube.mesh.rotation.y += icecube.rotateDelta.y;
+    }
+}
+
+/* Walls and Floor */
+addBackgorund(0, -10, -15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room2", "src/floor2.jpg");
+addBackgorund(0, 0, -30, "backwall", [0, 0, 0], [20, 20, 0.1], "room2", "src/texture2.jpg");
+addBackgorund(-10, 0, -15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
+addBackgorund(10, 0, -15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
+
+/* Ice Cubes */
 for (let i = 0 ; i < ICECUBE_NUM; i++) {
     var rotateDelta = new THREE.Vector3(
         Math.random()/100 ,
@@ -26,12 +36,78 @@ for (let i = 0 ; i < ICECUBE_NUM; i++) {
 }
 // addIceCube(0, -3, -25, 0, "room2", new THREE.Vector3(0.01, 0, 0), 0.5);
 
-function room2Animate() {
-    for (let i = 0; i < ICECUBE_NUM; i++) {
-        var icecube = objList["room2"][`icecube${i}`];
-        icecube.mesh.rotation.x += icecube.rotateDelta.x;
-        icecube.mesh.rotation.y += icecube.rotateDelta.y;
-    }
-}
-
+/* GLB */
+//addGlb(-6, -5, -9, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2");
 addRoom2Light();
+
+// const ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
+// // objList["room2"]["drive"].mesh.layers.enable( BLOOM_SCENE );
+// console.log(objList["room2"]);
+
+let bloomComposer = null;
+function addBloomPass() {
+    // RenderPass这个通道会渲染场景，但不会将渲染结果输出到屏幕上
+    const renderScene = new THREE.RenderPass(scene, camera)
+    const effectCopy = new THREE.ShaderPass(THREE.CopyShader); //传入了CopyShader着色器，用于拷贝渲染结果
+    effectCopy.renderToScreen = true;
+    // THREE.BloomPass(strength, kernelSize, sigma, Resolution)
+    // strength 定义泛光效果的强度，值越高，明亮的区域越明亮，而且渗入较暗区域的也就越多
+    // kernelSize 控制泛光的偏移量
+    // sigma 控制泛光的锐利程度，值越高，泛光越模糊
+    // Resolution 定义泛光的解析图，如果该值太低，结果的方块化就会越严重
+    const bloomPass = new THREE.UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 ) //BloomPass通道效果
+    bloomPass.threshold = 0;
+    bloomPass.strength = 1.5;
+    bloomPass.radius = 0;
+    bloomPass.renderToScreen = true;
+    //创建效果组合器对象，可以在该对象上添加后期处理通道，通过配置该对象，使它可以渲染我们的场景，并应用额外的后期处理步骤，在render循环中，使用EffectComposer渲染场景、应用通道，并输出结果。
+    bloomComposer = new THREE.EffectComposer(renderer)
+    bloomComposer.setSize(window.innerWidth, window.innerHeight);
+    bloomComposer.addPass(renderScene);
+    bloomComposer.addPass(bloomPass);
+    bloomComposer.addPass(effectCopy);
+    bloomComposer.render();
+}
+addBloomPass();
+function addCubes() {
+    // 创建两个box， 将box进行layers进行分层是重要代码，camera默认渲染0层
+    // let texture = new THREE.TextureLoader().load("./backav9.jpg")
+    // let texture1 = new THREE.TextureLoader().load("./py.png")
+    let color = new THREE.Color();
+	color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
+    var geometry1 = new THREE.BoxGeometry(1, 1, 1);
+    var material1 = new THREE.MeshBasicMaterial({
+      color: color
+    });
+    var cube1 = new THREE.Mesh(geometry1, material1);
+    // 重要代码，将当前创建的box分配到0层
+    cube1.layers.set(0);
+    cube1.layers.enable(0);
+    cube1.position.set(-6, -5, -9);
+    scene.add(cube1);
+    
+    color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
+    var geometry2 = new THREE.BoxGeometry(1, 1, 1);
+    var material2 = new THREE.MeshBasicMaterial({
+      color: color
+    });
+    var cube2 = new THREE.Mesh(geometry2, material2);
+    // 重要代码，将当前创建的box分配到1层
+    cube2.layers.set(1);
+    cube2.layers.enable(1);
+    cube2.position.set(6, -5, -9);
+    scene.add(cube2);
+
+    color.setHSL( Math.random(), 0.7, Math.random() * 0.2 + 0.05 );
+    var geometry3 = new THREE.BoxGeometry(1, 1, 1);
+    var material3 = new THREE.MeshBasicMaterial({
+      color: color
+    });
+    var cube3 = new THREE.Mesh(geometry3, material3);
+    // 重要代码，将当前创建的box分配到1层
+    cube3.layers.set(2);
+    cube3.layers.enable(2);
+    cube3.position.set(6, -5, -12);
+    scene.add(cube3);
+}
+addCubes();

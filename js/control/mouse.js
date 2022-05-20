@@ -15,9 +15,10 @@ function onclick(event) {
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
     var selected = getObject(mouse);
     if (selected) {
+        console.log(selected);
         var location = selected.name.substring(0, selected.name.indexOf("-"));
         var name = selected.name.substring(selected.name.indexOf("-")+1);
-        if (objList[location][name].clickable) {
+        if (objList[location] && objList[location][name] && objList[location][name].clickable) {
             /**
              * Add the click effect here. 
              * First Judge what object it is.
