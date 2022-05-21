@@ -129,3 +129,29 @@ function addIceCube(x, y, z, idx, location, rotateDelta, scale){
     // objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
 }
+
+function addMirror(x, y, z, name, angle, size, location, color){
+    const planeGeometry = new THREE.BoxBufferGeometry(size[0], size[1]);
+    let options = {
+        clipBias: 0.03,
+        textureWidth: window.innerWidth * window.devicePixelRatio,
+        textureHeight: window.innerHeight * window.devicePixelRatio,
+        color: color,
+        recursion: 1
+    };
+    objList[location][name] = new THREE.Reflector(planeGeometry, options);
+    objList[location][name].position.set(x, y, z);
+    objList[location][name].rotation.set(Math.PI*angle[0], Math.PI*angle[1], Math.PI*angle[2]);
+    objList[location][name].name = `${location}-${name}`;
+    scene.add(objList[location][name]);
+}
+
+function addSphere(x, y, z, name, angle, radius, location, u){
+    const geometry = new THREE.SphereBufferGeometry(radius);
+    const material = new THREE.MeshPhongMaterial();
+    material.color.setHSL(u, 1, .75);
+    objList[location][name] = new object(geometry, material, `${location}-${name}`);
+    objList[location][name].setPosition(x, y, z);
+    objList[location][name].setCastShadow();
+    objList[location][name].addToScene(scene);
+}

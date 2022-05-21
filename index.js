@@ -33,6 +33,7 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // camera.position.z = 20;
+  camera.position.x = 20;
   camera.position.z = 15;
   camera.position.y = -5;
   camera.layers.enable(0);
@@ -112,7 +113,7 @@ function createLight(){
   pointLight3.position.set(20, 0, 15);
   pointLight3.intensity = 1;
   pointLight3.distance = 50;
-  pointLight3.castShadow = true;
+  // pointLight3.castShadow = true;
   scene.add(pointLight3);
 }
 
