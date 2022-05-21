@@ -1,30 +1,30 @@
 renderer.domElement.addEventListener("click", onclick, true);
-// renderer.domElement.addEventListener("mousemove", onHover, true);
+renderer.domElement.addEventListener("pointermove", setMouseVec);
 var raycaster = new THREE.Raycaster();
-// var lastHovered = undefined;
-function getMouseVec(event) {
-    var mouse = new THREE.Vector2();
+raycaster.params.Points.threshold = 0.1;
+var mouse = new THREE.Vector2();
+
+function setMouseVec(event) {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    return mouse;
+    // console.log(mouse);
 }
 
-function getObject(mouse) {
+function getIntersectObject(candidates) {
     raycaster.setFromCamera(mouse, camera);
-    var intersects = raycaster.intersectObjects(scene.children, true); //array
+    var intersects = raycaster.intersectObjects(candidates, true); //array
     if (intersects.length > 0) {
-        return intersects[0]["object"];
+        return intersects[0];
     }
     return undefined;
 }
 
 function onclick(event) {
-    var selected = getObject(getMouseVec(event));
+    setMouseVec(event)
+    var selected = getIntersectObject(scene.children)["object"];
     if (selected) {
         var location = selected.name.substring(0, selected.name.indexOf("-"));
         var name = selected.name.substring(selected.name.indexOf("-")+1);
-        console.log(location);
-        console.log(name);
         if (objList[location] && objList[location][name] && objList[location][name].clickable) {
             /**
              * Add the click effect here. 
@@ -42,7 +42,6 @@ function onclick(event) {
                 }
             }
             else if ("ring" == name.substring(0, 4)) {
-                console.log("hi");
                 toggleBloomEffect(objList[location][name].mesh);
             }
         }
@@ -50,7 +49,7 @@ function onclick(event) {
 }
 
 // function onHover(event) {
-//     var selected = getObject(getMouseVec(event));
+//     var selected = getIntersectObject(setMouseVec(event))["object"];
 //     // console.log(event);
 //     if (selected && lastHovered!==selected) {
 //         console.log(selected);
