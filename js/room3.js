@@ -22,38 +22,27 @@ function room3CreateObject(){
     }
 }
 
-function room3Animate(time){
-    // clearInterval(timer);
-    // timer = setInterval(function(){}, 1000);
+function isInRoom3() {
+    return (camera.position.x >= 10) && (camera.position.x < 40) && (camera.position.z >= 0) && (camera.position.z <= 30);
+}
 
-    // for(let i = 0; i < ball_num; i++){
-    //     if(up[i] == true){
-    //         objList["room3"][`sphere${i}`].mesh.position.y += speed[i];
-    //         speed[i] -= 0.03;
-    //     }
-    //     else{
-    //         objList["room3"][`sphere${i}`].mesh.position.y -= speed[i];
-    //         speed[i] += 0.03;
-    //     }
-    //     if(objList["room3"][`sphere${i}`].mesh.position.y > ball_height[i]){
-    //         up[i] = false;
-    //     }
-    //     else if(objList["room3"][`sphere${i}`].mesh.position.y < -8){
-    //         up[i] = true;
-    //     }
-    // }
-
-    time = setInterval(function(){}, 1000);
-    time *= 0.05;
-    // console.log(time);
-    for(let i = 0; i < ball_num; i++){
-        const u = i / ball_num;
-        const speed = time * .2;
-        // yOff is a value that goes from 0 to 1
-        const yOff = Math.abs(Math.sin(time * 2 + i));
-        // move the sphere up and down
-        objList["room3"][`sphere${i}`].mesh.position.y = THREE.Math.lerp(-8, 0, yOff);
-        // console.log(objList["room3"][`sphere${i}`].mesh.position.y)
+function room3Animate(){
+    // time *= 0.001;
+    // const yOff = Math.abs(Math.sin(time * 2));
+    // objList["room3"]["sphere1"].position.y = y + THREE.Math.lerp(-2, 2, yOff);
+    if (isInRoom1() || isInRoom3()) {
+        time = setInterval(function(){}, 1000);
+        time *= 0.05;
+        // console.log(time);
+        for(let i = 0; i < ball_num; i++){
+            const u = i / ball_num;
+            const speed = time * .2;
+            // yOff is a value that goes from 0 to 1
+            const yOff = Math.abs(Math.sin(time * 2 + i));
+            // move the sphere up and down
+            objList["room3"][`sphere${i}`].mesh.position.y = THREE.Math.lerp(-8, 0, yOff);
+            // console.log(objList["room3"][`sphere${i}`].mesh.position.y)
+        }
     }
 }
 

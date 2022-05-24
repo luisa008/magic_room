@@ -1,4 +1,3 @@
-
 function createLayer(num) {
     const layer = new THREE.Layers();
     layer.set(num);
