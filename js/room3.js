@@ -20,24 +20,30 @@ function room3CreateObject(){
     }
 }
 
+function isInRoom3() {
+    return (camera.position.x >= 10) && (camera.position.x < 40) && (camera.position.z >= 0) && (camera.position.z <= 30);
+}
+
 function room3Animate(){
     // time *= 0.001;
     // const yOff = Math.abs(Math.sin(time * 2));
     // objList["room3"]["sphere1"].position.y = y + THREE.Math.lerp(-2, 2, yOff);
-    for(let i = 0; i < ball_num; i++){
-        if(up[i] == true){
-            objList["room3"][`sphere${i}`].mesh.position.y += speed[i];
-            speed[i] -= 0.03;
-        }
-        else{
-            objList["room3"][`sphere${i}`].mesh.position.y -= speed[i];
-            speed[i] += 0.03;
-        }
-        if(objList["room3"][`sphere${i}`].mesh.position.y > ball_height[i]){
-            up[i] = false;
-        }
-        else if(objList["room3"][`sphere${i}`].mesh.position.y < -8){
-            up[i] = true;
+    if (isInRoom3()) {
+        for(let i = 0; i < ball_num; i++){
+            if(up[i] == true){
+                objList["room3"][`sphere${i}`].mesh.position.y += speed[i];
+                speed[i] -= 0.03;
+            }
+            else{
+                objList["room3"][`sphere${i}`].mesh.position.y -= speed[i];
+                speed[i] += 0.03;
+            }
+            if(objList["room3"][`sphere${i}`].mesh.position.y > ball_height[i]){
+                up[i] = false;
+            }
+            else if(objList["room3"][`sphere${i}`].mesh.position.y < -8){
+                up[i] = true;
+            }
         }
     }
 }

@@ -10,6 +10,11 @@ const objList = {
   "room2": {},
   "room3": {}
 };
+// const area = {
+//   "room1": [new THREE.Vector2(-10, 0), new THREE.Vector2(10, 30)],
+//   "room2": [new THREE.Vector2(-10, -30), new THREE.Vector2(10, 0)],
+//   "room3": [new THREE.Vector2(25, 0), new THREE.Vector2(55, 30)],
+// };
 let angle = 0;
 let scene, renderer, camera;
 let pivot;
@@ -33,8 +38,8 @@ function initScene(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // camera.position.z = 20;
-  camera.position.x = 20;
-  camera.position.z = 15;
+  // camera.position.x = 20;
+  camera.position.z = -1;
   camera.position.y = -5;
   camera.layers.enable(0);
   camera.layers.enable(1);

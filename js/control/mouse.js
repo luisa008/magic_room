@@ -7,7 +7,6 @@ var mouse = new THREE.Vector2();
 function setMouseVec(event) {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    // console.log(mouse);
 }
 
 function getIntersectObject(candidates) {
@@ -30,7 +29,7 @@ function onclick(event) {
              * Add the click effect here. 
              * First Judge what object it is.
              */
-            if ("icecube" == name.substring(0, 7)) {
+            if ("icecube" === name.substring(0, 7)) {
                 if (objList[location][name].click()) {
                     selected.material = new THREE.MeshPhysicalMaterial({
                         metalness: 0,
@@ -41,8 +40,13 @@ function onclick(event) {
                     selected.material = objList[location][name].material;
                 }
             }
-            else if ("ring" == name.substring(0, 4)) {
+            else if ("ring" === name.substring(0, 4)) {
                 toggleBloomEffect(objList[location][name].mesh);
+            } 
+            else if ("label" === name.substring(0, 5)) {
+                $('#exampleModalTitle').html(objList[location][name].title);
+                $('#exampleModalContent').html(objList[location][name].content);
+                $('#exampleModal').modal('show');
             }
         }
     }

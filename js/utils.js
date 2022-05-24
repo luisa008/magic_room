@@ -155,3 +155,22 @@ function addSphere(x, y, z, name, angle, radius, location, u){
     objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
 }
+
+class LabelBtn extends object {
+    static baseSize = 0.3;
+    constructor(geometry, material, name, title, content, clickable=true) {
+        super(geometry, material, name, clickable);
+        this.title = title;
+        this.content = content;
+    }
+}
+
+function addLabelBtn(x, y, z, name, location, title, content){
+    const texture = new THREE.TextureLoader().load("src/label.jpg");
+    const geometry = new THREE.BoxGeometry(LabelBtn.baseSize, LabelBtn.baseSize, LabelBtn.baseSize);
+    const material = new THREE.MeshStandardMaterial({ map: texture });
+    objList[location][name] = new LabelBtn(geometry, material, `${location}-${name}`, title, content);
+    objList[location][name].setPosition(x, y, z);
+    // objList[location][name].setCastShadow();
+    objList[location][name].addToScene(scene);
+}
