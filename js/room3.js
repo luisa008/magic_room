@@ -8,8 +8,8 @@ let time = 0;
 function room3CreateObject(){
     addMirror(40, 0, 15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room3", 0x889999);
     addBackgorund(25, -10, 15, "floor", [-1/2, 0, 0], [30, 30, 0.1], "room3");
-    // addBackgorund(25, 10, 15, "ceiling", [-1/2, 0, 0], [30, 30, 0.1], "room3", "src/ball_ceiling.jpg");
-    addBackgorund(25, 0, 30, "frontwall", [0, 0, 0], [30, 20, 0.1], "room3");
+    addMirror(25, 10, 15, "ceiling", [1/2, 0, 0], [30, 30, 0.1], "room3", 0x889999);
+    addBackgorund(25, 0, 30, "frontwall", [0, 1, 0], [30, 20, 0.1], "room3");
     addMirror(25, 0, 0, "backwall", [0, 0, 0], [30, 20, 0.1], "room3", 0x889999);
     // addGlb(15, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room3");
     for(let i = 0; i < ball_num; i++){

@@ -54,10 +54,12 @@ function room1Animate() {
     }
     
     if(camera.position.x < 0 && camera.position.x > -5 && camera.position.z < 12 && camera.position.z > -12){
+        door1_open = true;
         if(pivot.rotation.y < Math.PI * 1/2)
             pivot.rotation.y += 0.03;
     }
     else{
+        door1_open = false;
         if(pivot.rotation.y > Math.PI * 0)
             pivot.rotation.y -= 0.03;
     }
