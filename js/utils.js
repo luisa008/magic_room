@@ -133,13 +133,15 @@ function addIceCube(x, y, z, idx, location, rotateDelta, scale){
 function addMirror(x, y, z, name, angle, size, location, color){
     const planeGeometry = new THREE.BoxBufferGeometry(size[0], size[1]);
     let options = {
-        clipBias: 0.03,
+        // clipBias: 0.03, // default 0, limit reflection
         textureWidth: window.innerWidth * window.devicePixelRatio,
         textureHeight: window.innerHeight * window.devicePixelRatio,
         color: color,
-        recursion: 1
+        recursion: 1,
     };
     objList[location][name] = new THREE.Reflector(planeGeometry, options);
+    // const material = new THREE.MeshPhongMaterial({color: 0xccddff, refractionRatio:0.98, reflectivity:0.9});
+    // objList[location][name] = new THREE.Mesh(planeGeometry, material);
     objList[location][name].position.set(x, y, z);
     objList[location][name].rotation.set(Math.PI*angle[0], Math.PI*angle[1], Math.PI*angle[2]);
     objList[location][name].name = `${location}-${name}`;
