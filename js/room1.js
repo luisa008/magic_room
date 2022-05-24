@@ -6,7 +6,9 @@ function room1CreateObject(){
     addBackgorund(-2.5, -6, 0, "door", [0, 0, 0], [5, 8, 0.1], "room1", "src/door.jpg");
     addGroup("room1", "door");
     addBackgorund(-10, 0, 15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room1");
-    addBackgorund(10, 0, 15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room1");
+    addBackgorund(10, 4, 15, "rightwall1", [0, -1/2, 0], [30, 12, 0.1], "room1");
+    addBackgorund(10, -6, 22.5, "rightwall2", [0, -1/2, 0], [15, 8, 0.1], "room1");
+    addBackgorund(10, -6, 5, "rightwall3", [0, -1/2, 0], [10, 8, 0.1], "room1");
     addBackgorund(0, -10, 15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room1", "src/floor.jpg");
     addBackgorund(0, 0, 30, "frontwall", [0, 0, 0], [20, 20, 0.1], "room1");
     addBackgorund(0, 10, 15, "ceiling", [-1/2, 0, 0], [20, 30, 0.1], "room1", "src/ceiling.jpg");
@@ -19,7 +21,7 @@ function room1CreateObject(){
     addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(-6, -8, 6, "case2", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(6, -8, 9, "case3", [0, 0, 0], [1, 4, 5], "room1");
-    addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1], "room1");
+    // addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(-6, -8, 15, "case5", [0, 0, 0], [1, 4, 5], "room1");
     addShowcase(6, -8, 22, "case6", [0, 0, 0], [1, 4, 5], "room1");
     addShowcase(5, -8, 27, "case7", [0, 0, 0], [1, 4, 1], "room1");
