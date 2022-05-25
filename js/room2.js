@@ -13,14 +13,15 @@ const spheres = [];
 let toggle = 0;
 let spheresIndex = 0;
 let driveMixer = null;
-let content;
+let labelContent;
 
 function isInRoom2() {
     return (camera.position.x >= -10) && (camera.position.x <=10) && (camera.position.z >= -30) && (camera.position.z <= 0);
 }
 
 function room2Animate() {
-    if (isInRoom2()) {
+    let inRoom2 = isInRoom2();
+    if (inRoom2 || DOOR1_OPEN) {
         if (driveMixer) {
             const delta = clock.getDelta();
             driveMixer.update( delta );
@@ -30,22 +31,22 @@ function room2Animate() {
             icecube.mesh.rotation.x += icecube.rotateDelta.x;
             icecube.mesh.rotation.y += icecube.rotateDelta.y;
         }
+    }
 
-        if (objList["room2"]["pointclouds"]) {
-            let intersection = getIntersectObject(objList["room2"]["pointclouds"]);
-            if ( toggle > 0.02 && intersection !== undefined ) {
-                spheres[ spheresIndex ].position.copy( intersection.point );
-                spheres[ spheresIndex ].scale.set( 1, 1, 1 );
-                spheresIndex = ( spheresIndex + 1 ) % spheres.length;
-                toggle = 0;
-            }
-            for ( let i = 0; i < spheres.length; i ++ ) {
-                const sphere = spheres[ i ];
-                sphere.scale.multiplyScalar( 0.98 );
-                sphere.scale.clampScalar( 0.01, 1 );
-            }
-            toggle += clock.getDelta();
+    if (inRoom2 && objList["room2"]["pointclouds"]) {
+        let intersection = getIntersectObject(objList["room2"]["pointclouds"]);
+        if ( toggle > 0.02 && intersection !== undefined ) {
+            spheres[ spheresIndex ].position.copy( intersection.point );
+            spheres[ spheresIndex ].scale.set( 1, 1, 1 );
+            spheresIndex = ( spheresIndex + 1 ) % spheres.length;
+            toggle = 0;
         }
+        for ( let i = 0; i < spheres.length; i ++ ) {
+            const sphere = spheres[ i ];
+            sphere.scale.multiplyScalar( 0.98 );
+            sphere.scale.clampScalar( 0.01, 1 );
+        }
+        toggle += clock.getDelta();
     }
 }
 
@@ -68,6 +69,15 @@ for (let i = 0 ; i < ICECUBE_NUM; i++) {
     var z = 3 + (-1 + 2 * Math.random()) -27;
     addIceCube(x, y, z, i, "room2", rotateDelta, scale);
 }
+labelContent = `
+    互動：點擊冰塊試試吧！<br>
+    技術：<br>
+    1. 改寫 js/three.js ，加上 RGBELoader 、 RoundedBoxGeometry 的class。<br>
+    2. 利用 RGBELoader 去載入 HDR檔，以獲得反光的材質。<br>
+    3. 利用 raycaster，將二維的「滑鼠點擊位置」轉換成三維向量以獲得點擊的物品。<br>
+    4. 使用 MeshPhysicalMaterial 做出透明效果。
+    `;
+addLabelBtn(-6.3, -5.7, -23, "label-icecube", "room2", "懸浮冰晶", labelContent);
 
 /* GLB */
 async function addDrive(x, y, z, name, angle, size, glbfile, location){
@@ -90,8 +100,13 @@ async function addDrive(x, y, z, name, angle, size, glbfile, location){
     } );
 }
 addDrive(-6, -5, -6, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2");
-content = "1. 使用到 Unreal Bloom 效果，將物件分成多個圖層，並針對不同圖層進行各自的後處理。<br>2. 將動畫效果儲存在模型glb檔內，使用Animation Mixer達成動畫效果。";
-addLabelBtn(-6.3, -5.7, -4, "label-drive", "room2", "原始離子動力裝置", content);
+labelContent = `
+    解說：神秘的宇宙礦石。<br>
+    技術：<br>
+    1. 使用到 Unreal Bloom 效果，將物件分成多個圖層，並針對不同圖層進行各自的後處理。<br>
+    2. 將動畫效果儲存在模型glb檔內，使用Animation Mixer達成動畫效果。
+    `;
+addLabelBtn(-6.3, -5.7, -4, "label-drive", "room2", "原始離子動力裝置", labelContent);
 
 /* Ring */
 function addRing(x, y, z, name, radius, angle, location, color) {

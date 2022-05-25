@@ -19,7 +19,7 @@ let angle = 0;
 let scene, renderer, camera;
 let pivot;
 let clock = new THREE.Clock();
-let door1_open = false;
+let DOOR1_OPEN = false;
 
 /* For glass effect */
 const glassTool = {};

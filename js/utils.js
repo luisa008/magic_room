@@ -164,6 +164,7 @@ class LabelBtn extends object {
         super(geometry, material, name, clickable);
         this.title = title;
         this.content = content;
+        addBloomEffect(this.mesh);
     }
 }
 

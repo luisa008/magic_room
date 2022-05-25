@@ -60,4 +60,5 @@ document.addEventListener('keydown', (e) => {
     
         camera.lookAt(lookPos);
     }
+    console.log(camera);
 });
