@@ -8,10 +8,10 @@ We combine different skills, special effects and creativity.
 This exhibitions has three different rooms.
 ### Room1
 #### Scene Image
-![]("src/room1_scene.png")
+![](https://i.imgur.com/vbUL2gL.jpg)
 ### Room2
 #### Scene image
-![]("src/room2_scene.png")
+![](https://i.imgur.com/6xbjDjB.jpg)
 ### Room3
 ##### Scene Image
-![]("src/room3_scene.png")
+![](https://i.imgur.com/XTwfm7W.jpg)
