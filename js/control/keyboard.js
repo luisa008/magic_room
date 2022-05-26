@@ -3,6 +3,18 @@ let RADIUS = 1.0;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
 
+const KEYS = {
+    "ArrowUp": false,
+    "ArrowDown": false,
+    "ArrowLeft": false,
+    "ArrowRight": false,
+    "KeyW": false,
+    "KeyS": false,
+    "KeyA": false,
+    "KeyD": false
+};
+let curPressedCnt = 0;
+
 function sin(degree) {
     return Math.sin((degree / 180) * Math.PI )
 }
@@ -12,19 +24,36 @@ function cos(degree) {
 }
 
 document.addEventListener('keydown', (e) => {
-    if (e.code == "KeyW" || e.code == "KeyS" || e.code == "KeyA" || e.code == "KeyD") {
+    if (KEYS[e.code] === false) {
+        curPressedCnt += 1;
+    }
+    KEYS[e.code] = true;
+});
+
+document.addEventListener('keyup', (e) => {
+    curPressedCnt -= 1;
+    KEYS[e.code] = false;
+});
+
+function mouseAnimation() {
+    if (curPressedCnt < 0) {
+        console.log("curPressedCnt is wrong.");
+    }
+    if (curPressedCnt <= 0) return;
+    if (KEYS["KeyW"] || KEYS["KeyS"] || KEYS["KeyA"] || KEYS["KeyD"]) {
         /* Translation */
         let angleXZ = 0;
-        if (e.code == "KeyW") {
+        if (KEYS["KeyW"]) {
             angleXZ = eyeAngleXZ;
         } 
-        else if (e.code == "KeyS") {
+        else if (KEYS["KeyS"]) {
             angleXZ = eyeAngleXZ + 180;
         } 
-        else if (e.code == "KeyA") {
+        
+        if (KEYS["KeyA"]) {
             angleXZ = eyeAngleXZ + 90;
         } 
-        else if (e.code == "KeyD") {
+        else if (KEYS["KeyD"]) {
             angleXZ = eyeAngleXZ - 90;
         }
         let deltaX = - sin(angleXZ) * PACE;
@@ -32,19 +61,19 @@ document.addEventListener('keydown', (e) => {
 
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
-        // console.log(camera.position);
     }
-    else if (e.code == "ArrowUp" || e.code == "ArrowDown" || e.code == "ArrowLeft" || e.code == "ArrowRight") {
+    if (KEYS["ArrowUp"] || KEYS["ArrowDown"] || KEYS["ArrowLeft"] || KEYS["ArrowRight"]) {
         /* Eye Direction Rotation */
-        if (e.code == "ArrowUp") {
+        if (KEYS["ArrowUp"]) {
             eyeAngleYZ += 1.0;
         }
-        else if (e.code == "ArrowDown") {
+        else if (KEYS["ArrowDown"]) {
             eyeAngleYZ -= 1.0;
         }
-        else if (e.code == "ArrowLeft") {
+        
+        if (KEYS["ArrowLeft"]) {
             eyeAngleXZ += 1.0;
-        } else {
+        } else if (KEYS["ArrowRight"]) {
             eyeAngleXZ -= 1.0;
         }
         
@@ -60,5 +89,4 @@ document.addEventListener('keydown', (e) => {
     
         camera.lookAt(lookPos);
     }
-    console.log(camera);
-});
+}
