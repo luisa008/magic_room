@@ -10,28 +10,27 @@ function addBackgorund(x, y, z, name, angle, size, location, texture="src/wall.j
     objList[location][name].setRotation(angle);
 }
   
+const showcaseTexture = new THREE.TextureLoader().load("src/showcase.jpg");
+const showcaseMaterial = new THREE.MeshStandardMaterial({ map: showcaseTexture });
 function addShowcase(x, y, z, name, angle, size, location){
-    const texture = new THREE.TextureLoader().load("src/showcase.jpg");
     const geometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
-    const material = new THREE.MeshStandardMaterial({ map: texture });
-    objList[location][name] = new object(geometry, material, `${location}-${name}`);
+    objList[location][name] = new object(geometry, showcaseMaterial, `${location}-${name}`);
     objList[location][name].setPosition(x, y, z);
     objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
 }
-  
+
+const diamondMaterial = new THREE.MeshPhysicalMaterial({
+    envMap: glassTool["hdrEquirect"],
+    envMapIntensity: 1.5,
+    metalness: 0,  
+    roughness: 0,
+    thickness: 1,
+    transmission: 1
+});
 function addDiamond(x, y, z, name, angle, size, location){
     const geometry = new THREE.IcosahedronGeometry(0.5, 0);
-    const material = new THREE.MeshPhysicalMaterial({
-      envMap: glassTool["hdrEquirect"],
-      envMapIntensity: 1.5,
-      metalness: 0,  
-      roughness: 0,
-      thickness: 1,
-      transmission: 1
-    });
-    // const material = new THREE.MeshStandardMaterial({color:0x7777ff});
-    objList[location][name] = new object(geometry, material, `${location}-${name}`);
+    objList[location][name] = new object(geometry, diamondMaterial, `${location}-${name}`);
     objList[location][name].setPosition(x, y, z);
     objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
@@ -105,26 +104,25 @@ class IceCube extends object {
     }
 }
   
+const iceCubeMaterial = new THREE.MeshPhysicalMaterial({
+    envMap: glassTool["hdrEquirect"],
+    envMapIntensity: 1.5,
+    metalness: 0, 
+    roughness: 0.1,
+    thickness: 1.2,
+    transmission: 1,
+    // clearcoat: 1,
+    // clearcoatRoughness: 0.1,
+    // normalScale: new THREE.Vector2(1),
+    // normalMap: glassTool["normalMapTexture"],
+    // clearcoatNormalMap: glassTool["normalMapTexture"],
+    // clearcoatNormalScale: new THREE.Vector2(0.3)
+});
 function addIceCube(x, y, z, idx, location, rotateDelta, scale){
     // const geometry = new THREE.BoxGeometry(IceCube.baseSize, IceCube.baseSize, IceCube.baseSize);
     const geometry = new THREE.RoundedBoxGeometry(IceCube.baseSize, IceCube.baseSize, IceCube.baseSize, IceCube.baseSize/5, 4);
-    
-    const material = new THREE.MeshPhysicalMaterial({
-        envMap: glassTool["hdrEquirect"],
-        envMapIntensity: 1.5,
-        metalness: 0, 
-        roughness: 0.1,
-        thickness: 1.2,
-        transmission: 1,
-        // clearcoat: 1,
-        // clearcoatRoughness: 0.1,
-        // normalScale: new THREE.Vector2(1),
-        // normalMap: glassTool["normalMapTexture"],
-        // clearcoatNormalMap: glassTool["normalMapTexture"],
-        // clearcoatNormalScale: new THREE.Vector2(0.3)
-    });
     var name = `icecube${idx}`;
-    objList[location][name] = new IceCube(geometry, material, `${location}-${name}`, rotateDelta, scale);
+    objList[location][name] = new IceCube(geometry, iceCubeMaterial, `${location}-${name}`, rotateDelta, scale);
     objList[location][name].setPosition(x, y, z);
     // objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
@@ -168,12 +166,11 @@ class LabelBtn extends object {
     }
 }
 
+const labelBtnTexture = new THREE.TextureLoader().load("src/label.jpg");
+const labelBtnMaterial = new THREE.MeshStandardMaterial({ map: labelBtnTexture });
 function addLabelBtn(x, y, z, name, location, title, content){
-    const texture = new THREE.TextureLoader().load("src/label.jpg");
     const geometry = new THREE.BoxGeometry(LabelBtn.baseSize, LabelBtn.baseSize, LabelBtn.baseSize);
-    const material = new THREE.MeshStandardMaterial({ map: texture });
-    objList[location][name] = new LabelBtn(geometry, material, `${location}-${name}`, title, content);
+    objList[location][name] = new LabelBtn(geometry, labelBtnMaterial, `${location}-${name}`, title, content);
     objList[location][name].setPosition(x, y, z);
-    // objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
 }

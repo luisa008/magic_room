@@ -46,6 +46,19 @@ function isInRoom1() {
     return (camera.position.x >= -10) && (camera.position.x <=10) && (camera.position.z >= 0) && (camera.position.z <= 30);
 }
 
+function door1Animation() {
+    if (camera.position.x < 0 && camera.position.x > -5 && camera.position.z < 12 && camera.position.z > -12) {
+        DOOR1_OPEN = true;
+        if(pivot.rotation.y < Math.PI * 1/2)
+            pivot.rotation.y += 0.03;
+    }
+    else {
+        DOOR1_OPEN = false;
+        if(pivot.rotation.y > Math.PI * 0)
+            pivot.rotation.y -= 0.03;
+    }
+}
+
 function room1Animate() {
     if (isInRoom1()) {
         objList["room1"]["diamond1"].mesh.rotation.x += 0.01;
@@ -57,17 +70,7 @@ function room1Animate() {
         if (objList["room1"]["vase1"]) {
             objList["room1"]["vase1"].rotation.y += 0.01;
         }
-        
-        if(camera.position.x < 0 && camera.position.x > -5 && camera.position.z < 12 && camera.position.z > -12){
-            DOOR1_OPEN = true;
-            if(pivot.rotation.y < Math.PI * 1/2)
-                pivot.rotation.y += 0.03;
-        }
-        else{
-            DOOR1_OPEN = false;
-            if(pivot.rotation.y > Math.PI * 0)
-                pivot.rotation.y -= 0.03;
-        }
+        door1Animation();
     }
 };
 

@@ -1,4 +1,6 @@
-const pointSize = 0.05;
+const POINT_SIZE = 0.05;
+const pointCloudMaterial = new THREE.PointsMaterial( { size: POINT_SIZE, vertexColors: true } );
+
 function generatePointCloudGeometry( color, width, length ) {
 
     const geometry = new THREE.BufferGeometry();
@@ -47,11 +49,8 @@ function generatePointCloudGeometry( color, width, length ) {
 }
 
 function generatePointcloud( color, width, length ) {
-
     const geometry = generatePointCloudGeometry( color, width, length );
-    const material = new THREE.PointsMaterial( { size: pointSize, vertexColors: true } );
-
-    return new THREE.Points( geometry, material );
+    return new THREE.Points( geometry, pointCloudMaterial );
 
 }
 
@@ -76,9 +75,7 @@ function generateIndexedPointcloud( color, width, length ) {
 
     geometry.setIndex( new THREE.BufferAttribute( indices, 1 ) );
 
-    const material = new THREE.PointsMaterial( { size: pointSize, vertexColors: true } );
-
-    return new THREE.Points( geometry, material );
+    return new THREE.Points( geometry, pointCloudMaterial );
 
 }
 
@@ -104,8 +101,6 @@ function generateIndexedWithOffsetPointcloud( color, width, length ) {
     geometry.setIndex( new THREE.BufferAttribute( indices, 1 ) );
     geometry.addGroup( 0, indices.length );
 
-    const material = new THREE.PointsMaterial( { size: pointSize, vertexColors: true } );
-
-    return new THREE.Points( geometry, material );
+    return new THREE.Points( geometry, pointCloudMaterial );
 
 }

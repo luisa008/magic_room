@@ -31,6 +31,7 @@ function room2Animate() {
             icecube.mesh.rotation.x += icecube.rotateDelta.x;
             icecube.mesh.rotation.y += icecube.rotateDelta.y;
         }
+        door1Animation();
     }
 
     if (inRoom2 && objList["room2"]["pointclouds"]) {
@@ -82,21 +83,21 @@ addLabelBtn(-6.3, -5.7, -23, "label-icecube", "room2", "懸浮冰晶", labelCont
 /* GLB */
 async function addDrive(x, y, z, name, angle, size, glbfile, location){
     const glb = new THREE.GLTFLoader().load( glbfile, function ( gltf ){
-    const model = gltf.scene;
-    model.position.set(x, y, z);
-    model.scale.set(size[0], size[1], size[2]);
-    model.name = `${location}-${name}`;
-    model.rotation.x = Math.PI * angle[0];
-    model.rotation.y = Math.PI * angle[1];
-    model.rotation.z = Math.PI * angle[2];
-    scene.add(model);
-    objList[location][name] = model;
-    
-    traverseChildren(model, addBloomEffect);
-    
-    driveMixer = new THREE.AnimationMixer( model );
-    const clip = gltf.animations[0];
-    driveMixer.clipAction( clip.optimize() ).play();
+        const model = gltf.scene;
+        model.position.set(x, y, z);
+        model.scale.set(size[0], size[1], size[2]);
+        model.name = `${location}-${name}`;
+        model.rotation.x = Math.PI * angle[0];
+        model.rotation.y = Math.PI * angle[1];
+        model.rotation.z = Math.PI * angle[2];
+        scene.add(model);
+        objList[location][name] = model;
+        
+        traverseChildren(model, addBloomEffect);
+        
+        driveMixer = new THREE.AnimationMixer( model );
+        const clip = gltf.animations[0];
+        driveMixer.clipAction( clip.optimize() ).play();
     } );
 }
 addDrive(-6, -5, -6, "drive", [0, 0, 0.5], [1, 1, 1], 'src/models/PrimaryIonDrive.glb', "room2");
@@ -133,6 +134,16 @@ for (let i = 0; i < RING_ROW; i++) {
     }
 }
 
+labelContent = `
+    互動：點擊冰塊試試吧！<br>
+    技術：<br>
+    1. 改寫 js/three.js ，加上 RGBELoader 、 RoundedBoxGeometry 的class。<br>
+    2. 利用 RGBELoader 去載入 HDR檔，以獲得反光的材質。<br>
+    3. 利用 raycaster，將二維的「滑鼠點擊位置」轉換成三維向量以獲得點擊的物品。<br>
+    4. 使用 MeshPhysicalMaterial 做出透明效果。
+    `;
+addLabelBtn(-7, -5.7, -10, "label-ring", "room2", "霓光環", labelContent);
+
 /* PointCloud */
 function addPointClouds() {
     const pcBuffer = generatePointcloud( new THREE.Color( 1, 0, 0 ), POINT_CLOUD_W, POINT_CLOUD_L );
@@ -156,7 +167,7 @@ function addPointClouds() {
     const sphereGeometry = new THREE.SphereGeometry( 0.1, 32, 32 );
     const sphereMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 
-    for ( let i = 0; i < 40; i ++ ) {
+    for ( let i = 0; i < 20; i ++ ) {
         const sphere = new object( sphereGeometry, sphereMaterial, `pointer${i}`);
         sphere.addToScene(scene);
         spheres.push( sphere.mesh );
