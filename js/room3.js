@@ -1,8 +1,4 @@
-const ball_num = 8;
-// let up = false, speed = 0, t = 0.01;
-let up = [false, false, false, false, false];
-let speed = [0, 0, 0, 0, 0], ball_height = [];
-let timer = null;
+const BALL_NUM = 8;
 let time = 0;
 
 function room3CreateObject(){
@@ -12,12 +8,11 @@ function room3CreateObject(){
     addBackgorund(25, 0, 30, "frontwall", [0, 1, 0], [30, 20, 0.1], "room3");
     addMirror(25, 0, 0, "backwall", [0, 0, 0], [30, 20, 0.1], "room3", 0x889999);
     // addGlb(15, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room3");
-    for(let i = 0; i < ball_num; i++){
-        const u = i / ball_num;
+    for(let i = 0; i < BALL_NUM; i++){
+        const u = i / BALL_NUM;
         var x = Math.random() * (35 - 15) + 15;
         var z = Math.random() * (25 - 5) + 5;
         var y = Math.random() * (0 - (-5)) + (-5);
-        ball_height.push(y);
         addSphere(x, y, z, `sphere${i}`, [0, 0, 0], 1, "room3", u);
     }
 }
@@ -27,21 +22,14 @@ function isInRoom3() {
 }
 
 function room3Animate(){
-    // time *= 0.001;
-    // const yOff = Math.abs(Math.sin(time * 2));
-    // objList["room3"]["sphere1"].position.y = y + THREE.Math.lerp(-2, 2, yOff);
-    if (isInRoom1() || isInRoom3()) {
+    if (isInRoom3() || (isInRoom1() && eyeAngleXZ < 0)) {
         time = setInterval(function(){}, 1000);
         time *= 0.05;
-        // console.log(time);
-        for(let i = 0; i < ball_num; i++){
-            const u = i / ball_num;
-            const speed = time * .2;
+        for(let i = 0; i < BALL_NUM; i++){
             // yOff is a value that goes from 0 to 1
             const yOff = Math.abs(Math.sin(time * 2 + i));
             // move the sphere up and down
             objList["room3"][`sphere${i}`].mesh.position.y = THREE.Math.lerp(-8, 0, yOff);
-            // console.log(objList["room3"][`sphere${i}`].mesh.position.y)
         }
     }
 }

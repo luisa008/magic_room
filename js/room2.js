@@ -21,7 +21,7 @@ function isInRoom2() {
 
 function room2Animate() {
     let inRoom2 = isInRoom2();
-    if (inRoom2 || DOOR1_OPEN) {
+    if (inRoom2 || (DOOR1_OPEN && eyeAngleXZ > -90 && eyeAngleXZ < 90) ) {
         if (driveMixer) {
             const delta = clock.getDelta();
             driveMixer.update( delta );

@@ -3,6 +3,15 @@ let RADIUS = 1.0;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
 
+function checkRange(angle) {
+    if (angle > 180) {
+        return angle - 360;
+    } else if (angle < -180) {
+        return angle + 360;
+    }
+    return angle;
+}
+
 const KEYS = {
     "ArrowUp": false,
     "ArrowDown": false,
@@ -31,11 +40,13 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-    curPressedCnt -= 1;
+    if (KEYS[e.code] === true) {
+        curPressedCnt -= 1;
+    }
     KEYS[e.code] = false;
 });
 
-function mouseAnimation() {
+function cameraAnimation() {
     if (curPressedCnt < 0) {
         console.log("curPressedCnt is wrong.");
     }
@@ -76,6 +87,8 @@ function mouseAnimation() {
         } else if (KEYS["ArrowRight"]) {
             eyeAngleXZ -= 1.0;
         }
+        eyeAngleXZ = checkRange(eyeAngleXZ);
+        eyeAngleYZ = checkRange(eyeAngleYZ);
         
         let deltaX = - sin(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
         let deltaY = sin(eyeAngleYZ) * RADIUS;
@@ -89,4 +102,5 @@ function mouseAnimation() {
     
         camera.lookAt(lookPos);
     }
+    
 }

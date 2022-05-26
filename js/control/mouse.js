@@ -51,12 +51,3 @@ function onclick(event) {
         }
     }
 }
-
-// function onHover(event) {
-//     var selected = getIntersectObject(setMouseVec(event))["object"];
-//     // console.log(event);
-//     if (selected && lastHovered!==selected) {
-//         console.log(selected);
-//         lastHovered = selected;
-//     }
-// }

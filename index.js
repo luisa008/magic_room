@@ -16,14 +16,18 @@ const objList = {
 //   "room3": [new THREE.Vector2(25, 0), new THREE.Vector2(55, 30)],
 // };
 let angle = 0;
-let scene, renderer, camera;
+let scene, renderer, camera, textureLoader;
 let pivot;
 let clock = new THREE.Clock();
 let DOOR1_OPEN = false;
 
+
+/* Save all texture */
+textureLoader = new THREE.TextureLoader();
+
 /* For glass effect */
 const glassTool = {};
-glassTool["normalMapTexture"] = new THREE.TextureLoader().load("src/normal.jpg");
+glassTool["normalMapTexture"] = textureLoader.load("src/normal.jpg");
 glassTool["normalMapTexture"].wrapS = THREE.RepeatWrapping;
 glassTool["normalMapTexture"].wrapT = THREE.RepeatWrapping;
 glassTool["normalMapTexture"].repeat.set(1, 1);
