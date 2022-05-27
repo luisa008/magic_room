@@ -17,9 +17,9 @@ const objList = {
 // };
 let angle = 0;
 let scene, renderer, camera, textureLoader;
-let pivot;
+let pivot, pivot2;
 let clock = new THREE.Clock();
-let DOOR1_OPEN = false;
+let DOOR1_OPEN = false, DOOR2_OPEN = false;
 
 
 /* Save all texture */
@@ -44,7 +44,7 @@ function initScene(){
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // camera.position.z = 20;
   // camera.position.x = 20;
-  camera.position.z = -1;
+  camera.position.z = 20;
   camera.position.y = -5;
   camera.layers.enable(0);
   camera.layers.enable(1);
@@ -131,6 +131,14 @@ function addGroup(location, name){
   pivot=new THREE.Group();
   scene.add(pivot);
   pivot.add(objList[location][name].mesh);
+}
+
+function addGroup2(location, name){
+  pivot2=new THREE.Group();
+  pivot2.position.set(10, -6, 15);
+  scene.add(pivot2);
+  pivot2.add(objList[location][name].mesh); // 設定要以哪個位置旋轉
+  objList[location][name].mesh.position.set(0, 0, -2.5); //要旋轉的物體鄉對於pivot2的位置
 }
 
 initScene();

@@ -7,7 +7,7 @@ function room3CreateObject(){
     addMirror(25, 10, 15, "ceiling", [1/2, 0, 0], [30, 30, 0.1], "room3", 0x889999);
     addBackgorund(25, 0, 30, "frontwall", [0, 1, 0], [30, 20, 0.1], "room3");
     addMirror(25, 0, 0, "backwall", [0, 0, 0], [30, 20, 0.1], "room3", 0x889999);
-    // addGlb(15, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room3");
+    addGlb(30, -10, 15, "walkman", [0, 1/2, 0], [2, 2, 2], 'src/models/walkman.glb', "room3");
     for(let i = 0; i < BALL_NUM; i++){
         const u = i / BALL_NUM;
         var x = Math.random() * (35 - 15) + 15;
@@ -21,6 +21,26 @@ function isInRoom3() {
     return (camera.position.x >= 10) && (camera.position.x < 40) && (camera.position.z >= 0) && (camera.position.z <= 30);
 }
 
+function walkAnimate(){
+    if(isInRoom3()){
+        if(!(scene.getObjectByName("room3-walkman"))){
+            scene.add(objList["room3"]["walkman"]);
+        }
+        objList["room3"]["walkman"].position.set(camera.position.x, -10, camera.position.z);
+        // let lookPos = new THREE.Vector3(
+        //     objList["room3"]["walkman"].position.x + deltaX, 
+        //     objList["room3"]["walkman"].position.y + deltaY, 
+        //     objList["room3"]["walkman"].position.z + deltaZ
+        // );
+        // objList["room3"]["walkman"].rotation.y = objList["room3"]["walkman"].position.y + deltaY;
+    }
+    else{
+        if(scene.getObjectByName("room3-walkman")){
+            scene.remove(objList["room3"]["walkman"]);
+        }
+    }
+}
+
 function room3Animate(){
     if (isInRoom3() || (isInRoom1() && eyeAngleXZ < 0)) {
         time = setInterval(function(){}, 1000);
@@ -32,6 +52,8 @@ function room3Animate(){
             objList["room3"][`sphere${i}`].mesh.position.y = THREE.Math.lerp(-8, 0, yOff);
         }
     }
+    door2Animation();
+    walkAnimate();
 }
 
 room3CreateObject();

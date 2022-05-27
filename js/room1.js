@@ -9,6 +9,8 @@ function room1CreateObject(){
     addBackgorund(10, 4, 15, "rightwall1", [0, -1/2, 0], [30, 12, 0.1], "room1");
     addBackgorund(10, -6, 22.5, "rightwall2", [0, -1/2, 0], [15, 8, 0.1], "room1");
     addBackgorund(10, -6, 5, "rightwall3", [0, -1/2, 0], [10, 8, 0.1], "room1");
+    addBackgorund(10, -6, 12.5, "door2", [0, -1/2, 0], [5, 8, 0.1], "room1", "src/door.jpg");
+    addGroup2("room1", "door2");
     addBackgorund(0, -10, 15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room1", "src/floor.jpg");
     addBackgorund(0, 0, 30, "frontwall", [0, 0, 0], [20, 20, 0.1], "room1");
     addBackgorund(0, 10, 15, "ceiling", [-1/2, 0, 0], [20, 30, 0.1], "room1", "src/ceiling.jpg");
@@ -20,7 +22,7 @@ function room1CreateObject(){
     // create showcase
     addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(-6, -8, 6, "case2", [0, 0, 0], [1, 4, 1], "room1");
-    addShowcase(6, -8, 9, "case3", [0, 0, 0], [1, 4, 5], "room1");
+    addShowcase(6, -8, 8, "case3", [0, 0, 0], [1, 4, 5], "room1");
     // addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(-6, -8, 15, "case5", [0, 0, 0], [1, 4, 5], "room1");
     addShowcase(6, -8, 22, "case6", [0, 0, 0], [1, 4, 5], "room1");
@@ -28,7 +30,7 @@ function room1CreateObject(){
     addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1], "room1");
   
     // create items
-    addDiamond(-6, -5, 9, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
+    addDiamond(-6, -5, 8, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
     addBowl(-6, -5.4, 6, "bowl1", [0, 0, 0], [0.5, 1, 1], "room1");
     addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room1");
     addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/models/chandelier4.glb', "room1");
@@ -59,6 +61,19 @@ function door1Animation() {
     }
 }
 
+function door2Animation(){
+    if (camera.position.x < 20 && camera.position.x > 0 && camera.position.z < 15 && camera.position.z > 10) {
+        DOOR2_OPEN = true;
+        if(pivot2.rotation.y < Math.PI * 1/2)
+            pivot2.rotation.y += 0.03;
+    }
+    else {
+        DOOR2_OPEN = false;
+        if(pivot2.rotation.y > Math.PI * 0)
+            pivot2.rotation.y -= 0.03;
+    }
+}
+
 function room1Animate() {
     if (isInRoom1()) {
         objList["room1"]["diamond1"].mesh.rotation.x += 0.01;
@@ -71,6 +86,7 @@ function room1Animate() {
             objList["room1"]["vase1"].rotation.y += 0.01;
         }
         door1Animation();
+        door2Animation();
     }
 };
 

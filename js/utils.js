@@ -65,18 +65,25 @@ function addBowl(x, y, z, name, angle, size, location){
   
 async function addGlb(x, y, z, name, angle, size, glbfile, location, isBloom=false){
     const glb = new THREE.GLTFLoader().load( glbfile, function ( gltf ){
-      let glbModel = gltf.scene;
-      glbModel.position.set(x, y, z);
-      glbModel.scale.set(size[0], size[1], size[2]);
-      glbModel.name = `${location}-${name}`;
-      glbModel.rotation.x = Math.PI * angle[0];
-      glbModel.rotation.y = Math.PI * angle[1];
-      glbModel.rotation.z = Math.PI * angle[2];
-      scene.add(glbModel);
-      objList[location][name] = glbModel;
-      if (isBloom) {
-        traverseChildren(glbModel, addBloomEffect);
-      }
+        let glbModel = gltf.scene;
+        glbModel.position.set(x, y, z);
+        glbModel.scale.set(size[0], size[1], size[2]);
+        glbModel.name = `${location}-${name}`;
+        glbModel.rotation.x = Math.PI * angle[0];
+        glbModel.rotation.y = Math.PI * angle[1];
+        glbModel.rotation.z = Math.PI * angle[2];
+        
+        // 以下註解的code是能夠讓glb有影子
+        // glbModel.traverse( function( node ) {
+
+        //     if ( node.isMesh ) { node.castShadow = true; }
+    
+        // } );
+        scene.add(glbModel);
+        objList[location][name] = glbModel;
+        if (isBloom) {
+            traverseChildren(glbModel, addBloomEffect);
+        }
     } );
 }
 
