@@ -22,17 +22,12 @@ function isInRoom3() {
 }
 
 function walkAnimate(){
-    if(isInRoom3()){
+    if(isInRoom3() || (DOOR2_OPEN && eyeAngleXZ < 0)){
         if(!(scene.getObjectByName("room3-walkman"))){
             scene.add(objList["room3"]["walkman"]);
         }
         objList["room3"]["walkman"].position.set(camera.position.x, -10, camera.position.z);
-        // let lookPos = new THREE.Vector3(
-        //     objList["room3"]["walkman"].position.x + deltaX, 
-        //     objList["room3"]["walkman"].position.y + deltaY, 
-        //     objList["room3"]["walkman"].position.z + deltaZ
-        // );
-        // objList["room3"]["walkman"].rotation.y = objList["room3"]["walkman"].position.y + deltaY;
+        objList["room3"]["walkman"].rotation.y = (eyeAngleXZ -180) / 180 * Math.PI ;
     }
     else{
         if(scene.getObjectByName("room3-walkman")){
@@ -42,7 +37,7 @@ function walkAnimate(){
 }
 
 function room3Animate(){
-    if (isInRoom3() || (isInRoom1() && eyeAngleXZ < 0)) {
+    if (isInRoom3() || (DOOR2_OPEN && eyeAngleXZ < 0)) {
         time = setInterval(function(){}, 1000);
         time *= 0.05;
         for(let i = 0; i < BALL_NUM; i++){
