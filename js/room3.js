@@ -27,7 +27,7 @@ function room3CreateObject(){
     addBackgorund(25, 10, 15, "ceiling", [1/2, 0, 0], [30, 30, 0.1], "room3");
     addBackgorund(25, 0, 30, "frontwall", [0, 1, 0], [30, 20, 0.1], "room3");
     addMirror(25, 0, 0, "backwall", [0, 0, 0], [30, 20, 0.1], "room3", 0x889999);
-    addWalkman(30, -10, 15, "walkman", [0, 1/2, 0], [2, 2, 2], 'src/models/walkman.glb', "room3");
+    addWalkman(30, -10, 15, "walkman", [0, 1/2, 0], [2, 2, 2], 'src/models/walkman2.glb', "room3");
     for(let i = 0; i < BALL_NUM; i++){
         const u = i / BALL_NUM;
         var x = Math.random() * (35 - 15) + 15;
@@ -35,6 +35,14 @@ function room3CreateObject(){
         var y = Math.random() * (0 - (-5)) + (-5);
         addSphere(x, y, z, `sphere${i}`, [0, 0, 0], 1, "room3", u);
     }
+
+    labelContent = `
+        解說：隨意彈跳彩球<br>
+        技術：<br>
+        1. 使用phong shading作為球的材質，並且用setHSL讓每個球的顏色不會突兀。<br>
+        2. 用Math.lerp讓球做震盪，實現墜落與反彈。
+        `;
+    addLabelBtn(20, 4, -4, "label-ball", "room1", "彈跳彩球", labelContent);
 }
 
 function isInRoom3() {

@@ -42,6 +42,14 @@ function room1CreateObject(){
     addBackgorund(-9.9, -7, 9, "ceiling", [0, 1/2, 0], [3, 0.3, 0.5], "room1", "src/frame.jpg");
     addBackgorund(-9.9, -5, 10.5, "ceiling", [0, 1/2, 0], [0.3, 4.3, 0.5], "room1", "src/frame.jpg");
     addBackgorund(-9.9, -5, 7.5, "ceiling", [0, 1/2, 0], [0.3, 4.3, 0.5], "room1", "src/frame.jpg");
+
+    labelContent = `
+        解說：互動門<br>
+        技術：<br>
+        1. 將object放到group裡，指定group軸的位置後再將門放到相對位置旋轉。<br>
+        2. 靠近門時門會打開，遠離時會關閉。
+        `;
+    addLabelBtn(0, 4, -4, "label-door", "room1", "互動門", labelContent);
 }
 
 function isInRoom1() {
