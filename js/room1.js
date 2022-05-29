@@ -30,7 +30,7 @@ function room1CreateObject(){
     addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1], "room1");
   
     // create items
-    addDiamond(-6, -5, 8, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
+    addDiamond(-6, -5, 9, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
     addBowl(-6, -5.4, 6, "bowl1", [0, 0, 0], [0.5, 1, 1], "room1");
     addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room1");
     addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/models/chandelier4.glb', "room1");

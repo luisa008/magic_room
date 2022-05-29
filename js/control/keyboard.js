@@ -2,7 +2,7 @@ let PACE = 0.5;
 let RADIUS = 1.0;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
-
+let CAMERA_MOVING = false;
 function checkRange(angle) {
     if (angle > 180) {
         return angle - 360;
@@ -50,7 +50,10 @@ function cameraAnimation() {
     if (curPressedCnt < 0) {
         console.log("curPressedCnt is wrong.");
     }
-    if (curPressedCnt <= 0) return;
+    if (curPressedCnt <= 0) {
+        CAMERA_MOVING = false;
+        return;
+    }
     if (KEYS["KeyW"] || KEYS["KeyS"] || KEYS["KeyA"] || KEYS["KeyD"]) {
         /* Translation */
         let angleXZ = 0;
@@ -72,6 +75,7 @@ function cameraAnimation() {
 
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
+        CAMERA_MOVING = true;
     }
     if (KEYS["ArrowUp"] || KEYS["ArrowDown"] || KEYS["ArrowLeft"] || KEYS["ArrowRight"]) {
         /* Eye Direction Rotation */
