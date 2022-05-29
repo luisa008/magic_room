@@ -56,6 +56,7 @@ addBackgorund(0, -10, -15, "floor", [-1/2, 0, 0], [20, 30, 0.1], "room2", "src/f
 addBackgorund(0, 0, -30, "backwall", [0, 0, 0], [20, 20, 0.1], "room2", "src/texture2.jpg");
 addBackgorund(-10, 0, -15, "leftwall", [0, 1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
 addBackgorund(10, 0, -15, "rightwall", [0, -1/2, 0], [30, 20, 0.1], "room2", "src/wall2.jpg");
+addBackgorund(0, 10, -15, "ceiling", [-1/2, 0, 0], [20, 30, 0.1], "room2", "src/wall2.jpg");
 
 /* Ice Cubes */
 for (let i = 0 ; i < ICECUBE_NUM; i++) {
@@ -169,6 +170,7 @@ function addPointClouds() {
 
     for ( let i = 0; i < 20; i ++ ) {
         const sphere = new object( sphereGeometry, sphereMaterial, `pointer${i}`);
+        sphere.mesh.scale.set(0.05, 0.05, 0.05);
         sphere.addToScene(scene);
         spheres.push( sphere.mesh );
     }
