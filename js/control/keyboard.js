@@ -76,6 +76,8 @@ function cameraAnimation() {
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
         CAMERA_MOVING = true;
+    } else {
+        CAMERA_MOVING = false;
     }
     if (KEYS["ArrowUp"] || KEYS["ArrowDown"] || KEYS["ArrowLeft"] || KEYS["ArrowRight"]) {
         /* Eye Direction Rotation */

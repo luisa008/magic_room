@@ -30,6 +30,7 @@ function onclick(event) {
              * First Judge what object it is.
              */
             if ("icecube" === name.substring(0, 7)) {
+                // objList[location][name].break();
                 if (objList[location][name].click()) {
                     selected.material = new THREE.MeshPhysicalMaterial({
                         metalness: 0,
