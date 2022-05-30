@@ -42,7 +42,14 @@ function room3CreateObject(){
         1. 使用phong shading作為球的材質，並且用setHSL讓每個球的顏色不會突兀。<br>
         2. 用Math.lerp讓球做震盪，實現墜落與反彈。
         `;
-    addLabelBtn(20, 4, -4, "label-ball", "room1", "彈跳彩球", labelContent);
+    addLabelBtn(20, -4, 4, "label-ball", "room1", "彈跳彩球", labelContent);
+
+    labelContent = `
+        解說：實做鏡子<br>
+        技術：<br>
+        1. 使用THREE.Reflector實做鏡子。
+        `;
+    addLabelBtn(16, -4, 4, "label-ball", "room1", "彈跳彩球", labelContent);
 }
 
 function isInRoom3() {

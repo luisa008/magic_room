@@ -232,3 +232,15 @@ function addLabelBtn(x, y, z, name, location, title, content, isBloom=true){
     objList[location][name].setPosition(x, y, z);
     objList[location][name].addToScene(scene);
 }
+
+function addCylinder(x, y, z, name, radius, location){
+    const geometry = new THREE.CylinderBufferGeometry(radius[0], radius[1], radius[2], 32, 2);
+    const material = new THREE.MeshLambertMaterial({
+        color: 0x3f7b9d,
+        envMap: glassTool["hdrEquirect"],
+        envMapIntensity: 1});
+    objList[location][name] = new object(geometry, material, `${location}-${name}`);
+    objList[location][name].setPosition(x, y, z);
+    objList[location][name].setCastShadow();
+    objList[location][name].addToScene(scene);
+}

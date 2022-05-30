@@ -35,6 +35,8 @@ function room1CreateObject(){
     addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room1");
     addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/models/chandelier4.glb', "room1");
     addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/models/man1.glb', "room1");
+    addCylinder(6, -5, 22, "cylinder1", [0.2, 0.5, 2], "room1");
+    addCylinder(6, -4, 22, "cylinder2", [0.5, 0.2, 0.5], "room1");
   
     // create picture
     addPlane(-9.9, -5, 9, "plane1", [0, 1/2, 0], [3, 4, 3], 'src/kaleidoscope.jpg', "room1");
@@ -49,6 +51,13 @@ function room1CreateObject(){
         2. 靠近門時門會打開，遠離時會關閉。
         `;
     addLabelBtn(0.3, -5.7, 1, "label-door", "room1", "互動門", labelContent, false);
+
+    labelContent = `
+        技術：<br>
+        1. 使用blender製作花瓶，並且加上texture。<br>
+        2. 用glbLoader將glb load到場景。
+        `;
+    addLabelBtn(7, -5, 7, "label-door", "room1", "自製花瓶", labelContent, false);
 }
 
 function isInRoom1() {
