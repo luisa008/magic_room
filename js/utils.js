@@ -177,7 +177,7 @@ const iceCubeMaterial = new THREE.MeshPhysicalMaterial({
     transmission: 1,
 });
 function addIceCube(x, y, z, idx, location, rotateDelta, scale){
-    console.log(idx);
+    // console.log(idx);
     var name = `icecube${idx}`;
     objList[location][name] = new IceCube(iceCubeGeometry, iceCubeMaterial, `${location}-${name}`, rotateDelta, scale);
     objList[location][name].setPosition(x, y, z);
@@ -243,4 +243,18 @@ function addCylinder(x, y, z, name, radius, location){
     objList[location][name].setPosition(x, y, z);
     objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);
+}
+
+function addLineBall(x, y, z, name, radius, location){
+    const geometry = new THREE.SphereBufferGeometry(radius);
+    const material = new THREE.LineBasicMaterial({
+        color: 0x30395C,
+        // transparent: true,
+        opacity: 0
+    });
+    const lineGeometry = new THREE.EdgesGeometry(geometry);
+    objList[location][name] = new THREE.LineSegments(lineGeometry, material);
+    objList[location][name].position.set(x, y, z);
+    objList[location][name].cashShadow = true;
+    scene.add(objList[location][name]);
 }

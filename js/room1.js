@@ -35,8 +35,9 @@ function room1CreateObject(){
     addGlb(6, -5.4, 9, "vase1", [0, 0, 0], [0.5, 0.5, 0.5], 'src/models/vase1.glb', "room1");
     addGlb(0, 0, 15, "chandelier", [0, 0, 0], [0.02, 0.01, 0.02], 'src/models/chandelier4.glb', "room1");
     addGlb(-5.5, -10, 23, "man", [0, 1/2, 0], [4, 4, 4], 'src/models/man1.glb', "room1");
-    addCylinder(6, -5, 22, "cylinder1", [0.2, 0.5, 2], "room1");
-    addCylinder(6, -4, 22, "cylinder2", [0.5, 0.2, 0.5], "room1");
+    addCylinder(-3, -5, 27, "cylinder1", [0.2, 0.5, 2], "room1");
+    addCylinder(-3, -4, 27, "cylinder2", [0.5, 0.2, 0.5], "room1");
+    addLineBall(6, -5, 22, "lineball1", 1, "room1");
   
     // create picture
     addPlane(-9.9, -5, 9, "plane1", [0, 1/2, 0], [3, 4, 3], 'src/kaleidoscope.jpg', "room1");
@@ -57,7 +58,20 @@ function room1CreateObject(){
         1. 使用blender製作花瓶，並且加上texture。<br>
         2. 用glbLoader將glb load到場景。
         `;
-    addLabelBtn(7, -5, 7, "label-door", "room1", "自製花瓶", labelContent, false);
+    addLabelBtn(7, -5, 7, "label-vase", "room1", "自製花瓶", labelContent, false);
+
+    labelContent = `
+        技術：<br>
+        1. 使用MeshLambertMaterial並套上envmap
+        `;
+    addLabelBtn(-5, -5, 27, "label-vase2", "room1", "幻影藝術", labelContent, false);
+
+    labelContent = `
+        解說：使展品呈現網狀感 <br>
+        技術：<br>
+            網狀的呈現方式是藉由先得到物體形狀，然後放入EdgesGeometry將其網狀化，之後再配上材質顯現螢光效果。
+        `;
+    addLabelBtn(6, -5, 20, "label-lineball", "room1", "網狀球", labelContent, false);
 }
 
 function isInRoom1() {
@@ -94,6 +108,7 @@ function room1Animate() {
     if (isInRoom1()) {
         objList["room1"]["diamond1"].mesh.rotation.x += 0.01;
         objList["room1"]["diamond1"].mesh.rotation.y += 0.01;
+        objList["room1"]["lineball1"].rotation.y += 0.01;
         objList["room1"]["bowl1"].mesh.rotation.y += 0.01;
         if (objList["room1"]["chandelier"]) {
             objList["room1"]["chandelier"].rotation.y += 0.01;
