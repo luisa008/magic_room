@@ -105,12 +105,12 @@ class object {
   }
 
 function createLight(){
-  const pointLight = new THREE.PointLight( 0xffffff );
-  pointLight.position.set(0, 0, 15);
-  pointLight.intensity = 1.2;
-  pointLight.distance = 50;
-  pointLight.castShadow = true;
-  scene.add(pointLight);
+  objList["room1"]["pointlight"] = new THREE.PointLight( 0xffffff );
+  objList["room1"]["pointlight"].position.set(0, 0, 15);
+  objList["room1"]["pointlight"].intensity = 1.2;
+  objList["room1"]["pointlight"].distance = 50;
+  objList["room1"]["pointlight"].castShadow = true;
+  scene.add(objList["room1"]["pointlight"]);
 
   const pointLight2 = new THREE.PointLight( 0xffffff );
   pointLight2.position.set(0, 5, -15);
@@ -125,6 +125,12 @@ function createLight(){
   pointLight3.distance = 50;
   // pointLight3.castShadow = true;
   scene.add(pointLight3);
+
+  objList["room1"]["spotlight"] = new THREE.SpotLight( 0xffffff );
+  objList["room1"]["spotlight"].intensity = 0.5;
+  objList["room1"]["spotlight"].angle = Math.PI/23;
+  objList["room1"]["spotlight"].castShadow = true;
+  // scene.add(objList["room1"]["spotlight"]);
 }
 
 function addGroup(location, name){
