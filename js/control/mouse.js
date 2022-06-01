@@ -49,6 +49,21 @@ function onclick(event) {
                 $('#exampleModalContent').html(objList[location][name].content);
                 $('#exampleModal').modal('show');
             }
+            else if ("case" === name.substring(0, 4)) {
+                if (objList[location][name].click()) {
+                    camera.position = objList[location][name].focusPos;
+                    eyeAngleXZ = objList[location][name].focusAngleXZ;
+                    moveEye();
+                } else {
+                    camera.position = objList[location][name].backCamPos;
+                    eyeAngleXZ = objList[location][name].backCamAngleXZ;
+                    moveEye();
+                    console.log(objList[location][name].backCamPos);
+                    console.log(objList[location][name].backCamAngleXZ);
+                    console.log(camera.position);
+                    console.log(eyeAngleXZ);
+                }
+            }
         }
     }
 }

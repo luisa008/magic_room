@@ -136,12 +136,10 @@ for (let i = 0; i < RING_ROW; i++) {
 }
 
 labelContent = `
-    互動：點擊冰塊試試吧！<br>
+    互動：點擊光環試試吧！<br>
     技術：<br>
-    1. 改寫 js/three.js ，加上 RGBELoader 、 RoundedBoxGeometry 的class。<br>
-    2. 利用 RGBELoader 去載入 HDR檔，以獲得反光的材質。<br>
-    3. 利用 raycaster，將二維的「滑鼠點擊位置」轉換成三維向量以獲得點擊的物品。<br>
-    4. 使用 MeshPhysicalMaterial 做出透明效果。
+    1. 使用到 Unreal Bloom 效果，將物件分成多個圖層，並針對不同圖層進行各自的後處理。<br>
+    2. 點擊將使物件在不同圖層中切換。
     `;
 addLabelBtn(-7, -5.7, -10, "label-ring", "room2", "霓光環", labelContent);
 
@@ -177,6 +175,14 @@ function addPointClouds() {
 }
 
 addPointClouds();
+
+labelContent = `
+    互動：懸浮滑鼠在點狀雲上！<br>
+    技術：<br>
+    1. 使用BufferGeometry去定義每個Point的position。<br>
+    2. 每一次render，紅球都會去追蹤滑鼠的新位置，並隨時間遞減體積，達成顯示滑鼠軌跡的效果。
+    `;
+addLabelBtn(7, -5.7, -18, "label-pointcloud", "room2", "點狀雲牆", labelContent);
 
 
 function addRoom2Light() {

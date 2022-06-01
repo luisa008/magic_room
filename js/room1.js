@@ -20,7 +20,7 @@ function room1CreateObject(){
     addBackgorund(0, 9, 29, "beam4", [0, 0, 0], [20, 1, 2], "room1");
   
     // create showcase
-    addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1], "room1");
+    addShowcase(-6, -8, 9, "case1", [0, 0, 0], [1, 4, 1], "room1", true, [-5, -5, 9], 90);
     addShowcase(-6, -8, 6, "case2", [0, 0, 0], [1, 4, 1], "room1");
     addShowcase(6, -8, 8, "case3", [0, 0, 0], [1, 4, 5], "room1");
     // addShowcase(6, -8, 15, "case4", [0, 0, 0], [1, 4, 1], "room1");

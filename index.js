@@ -20,7 +20,7 @@ let scene, renderer, camera, textureLoader;
 let pivot, pivot2;
 let clock = new THREE.Clock();
 let DOOR1_OPEN = false, DOOR2_OPEN = false;
-
+// const gui = new dat.GUI();
 
 /* Save all texture */
 textureLoader = new THREE.TextureLoader();

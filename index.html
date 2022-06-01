@@ -14,10 +14,20 @@
 			<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalTitle">Modal title</h5>
+				<h5 class="modal-title" id="exampleModalTitle">歡迎來到我們的線上藝術展！</h5>
 				</div>
 				<div class="modal-body" id="exampleModalContent">
-				...
+				我們在這個展覽裡實作了各種3D物件，<br>
+				以及透明、鏡面、霓虹燈等較複雜的材質，<br>
+				搭配沈浸式的使用者互動介面。
+				<br>
+				<br>
+				你可以：<br>
+				<ul>
+					<li>鍵盤敲擊W, S, A, D -> 前後左右移動</li>
+					<li>鍵盤敲擊方向鍵 -> 改變頭部視角</li>
+					<li>滑鼠點擊「黃色問號懸浮方塊」-> 獲得更多展品資訊</li>
+				</ul>
 				</div>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="exampleModalClose">Close</button>
@@ -30,6 +40,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		<script>
+			$('#exampleModal').modal('show');
 			$("#exampleModalClose").click(function() {
 				$('#exampleModal').modal('hide');
 			});
@@ -37,8 +48,9 @@
 		<!-- Modal Section End-->
 
 		<script src="js/three.js"></script>
+		<script type="text/javascript" src="js/dat.gui.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/loaders/GLTFLoader.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/controls/OrbitControls.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/controls/OrbitControls.js"></script> -->
 		<script src="https://cdn.jsdelivr.net/npm/three@0.140/examples/js/objects/Reflector.js"></script>
 		
 		<!-- For Unreal Bloom Effect-->

@@ -3,6 +3,7 @@ let RADIUS = 1.0;
 let eyeAngleXZ = 0.0;
 let eyeAngleYZ = 0.0;
 let CAMERA_MOVING = false;
+
 function checkRange(angle) {
     if (angle > 180) {
         return angle - 360;
@@ -45,6 +46,28 @@ document.addEventListener('keyup', (e) => {
     }
     KEYS[e.code] = false;
 });
+
+function moveCamera(angleXZ) {
+    let deltaX = - sin(angleXZ) * PACE;
+    let deltaZ = - cos(angleXZ) * PACE;
+
+    camera.position.x += deltaX;
+    camera.position.z += deltaZ;
+}
+
+function moveEye() {
+    let deltaX = - sin(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
+    let deltaY = sin(eyeAngleYZ) * RADIUS;
+    let deltaZ = - cos(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
+
+    let lookPos = new THREE.Vector3(
+        camera.position.x + deltaX, 
+        camera.position.y + deltaY, 
+        camera.position.z + deltaZ
+    );
+
+    camera.lookAt(lookPos);
+}
 
 function cameraAnimation() {
     if (curPressedCnt < 0) {
