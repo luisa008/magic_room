@@ -22,36 +22,18 @@ const showcaseTexture = textureLoader.load("src/showcase.jpg");
 const showcaseMaterial = new THREE.MeshStandardMaterial({ map: showcaseTexture });
 
 class Showcase extends object {
-    constructor(geometry, material, name, clickable, focusPos, focusAngleXZ) {
+    constructor(geometry, material, name, clickable, focusPos, focusAngleXZ, focusAngleYZ) {
         super(geometry, material, name, clickable);
         /* For focus */
-        this.focusPos = undefined;
-        if (focusPos) {
-            this.focusPos = new THREE.Vector3(focusPos[0], focusPos[1], focusPos[2]);
-        }
-        this.focusAngleXZ = focusAngleXZ;
-        this.backCamPos = undefined;
-        this.backCamAngleXZ = undefined;
-    }
-    click() {
-        if (this.clickable) {
-            if (!this.clicked) {
-                this.backCamPos = new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z);
-                this.backCamAngleXZ = eyeAngleXZ;
-                console.log("this.backCamPos");
-                console.log(this.backCamPos);
-                console.log("this.backCamAngleXZ");
-                console.log(this.backCamAngleXZ);
-            }
-            return super.click();
-        }
-        return false;
+        this.focusPos = focusPos;
+        this.focusAngleXZ = focusAngleXZ;  
+        this.focusAngleYZ = focusAngleYZ;  
     }
 }
 
-function addShowcase(x, y, z, name, angle, size, location, clickable=false, focusPos=undefined, focusAngleXZ=undefined){
+function addShowcase(x, y, z, name, angle, size, location, clickable=false, focusPos=undefined, focusAngleXZ=undefined, focusAngleYZ=undefined){
     const geometry = new THREE.BoxGeometry(size[0], size[1], size[2]);
-    objList[location][name] = new Showcase(geometry, showcaseMaterial, `${location}-${name}`, clickable, focusPos, focusAngleXZ);
+    objList[location][name] = new Showcase(geometry, showcaseMaterial, `${location}-${name}`, clickable, focusPos, focusAngleXZ, focusAngleYZ);
     objList[location][name].setPosition(x, y, z);
     objList[location][name].setCastShadow();
     objList[location][name].addToScene(scene);

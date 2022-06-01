@@ -47,14 +47,6 @@ document.addEventListener('keyup', (e) => {
     KEYS[e.code] = false;
 });
 
-function moveCamera(angleXZ) {
-    let deltaX = - sin(angleXZ) * PACE;
-    let deltaZ = - cos(angleXZ) * PACE;
-
-    camera.position.x += deltaX;
-    camera.position.z += deltaZ;
-}
-
 function moveEye() {
     let deltaX = - sin(eyeAngleXZ) * cos(eyeAngleYZ) * RADIUS;
     let deltaY = sin(eyeAngleYZ) * RADIUS;
@@ -99,6 +91,7 @@ function cameraAnimation() {
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
         CAMERA_MOVING = true;
+        console.log(camera.position);
     } else {
         CAMERA_MOVING = false;
     }
@@ -130,6 +123,9 @@ function cameraAnimation() {
         );
     
         camera.lookAt(lookPos);
+        console.log(eyeAngleXZ);
+        console.log(eyeAngleYZ);
+
     }
     
 }

@@ -50,19 +50,18 @@ function onclick(event) {
                 $('#exampleModal').modal('show');
             }
             else if ("case" === name.substring(0, 4)) {
-                if (objList[location][name].click()) {
-                    camera.position = objList[location][name].focusPos;
-                    eyeAngleXZ = objList[location][name].focusAngleXZ;
-                    moveEye();
-                } else {
-                    camera.position = objList[location][name].backCamPos;
-                    eyeAngleXZ = objList[location][name].backCamAngleXZ;
-                    moveEye();
-                    console.log(objList[location][name].backCamPos);
-                    console.log(objList[location][name].backCamAngleXZ);
-                    console.log(camera.position);
-                    console.log(eyeAngleXZ);
-                }
+                camera.position.x = objList[location][name].focusPos[0];
+                camera.position.y = objList[location][name].focusPos[1];
+                camera.position.z = objList[location][name].focusPos[2];
+                console.log("objList[location][name].focusPos");
+                console.log(objList[location][name].focusPos);
+                console.log("objList[location][name].focusAngleYZ");
+                console.log(objList[location][name].focusAngleYZ);
+                console.log("camera.position");
+                console.log(camera.position);
+                eyeAngleXZ = objList[location][name].focusAngleXZ;
+                eyeAngleYZ = objList[location][name].focusAngleYZ;
+                moveEye();
             }
         }
     }
