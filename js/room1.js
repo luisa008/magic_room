@@ -27,7 +27,7 @@ function room1CreateObject(){
     addShowcase(-6, -8, 15, "case5", [0, 0, 0], [1, 4, 5], "room1");
     addShowcase(6, -8, 22, "case6", [0, 0, 0], [1, 4, 5], "room1", true, [2.5, -5, 22], -90, 0);
     addShowcase(5, -8, 27, "case7", [0, 0, 0], [1, 4, 1], "room1");
-    addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1], "room1");
+    addShowcase(-3, -8, 27, "case8", [0, 0, 0], [5, 4, 1], "room1", true, [-3, -5, 23], -179, 5);
   
     // create items
     addDiamond(-6, -5, 9, "diamond1", [0, 0, 0], [0.5, 1, 1], "room1");
