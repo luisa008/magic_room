@@ -127,8 +127,8 @@ function createLight(){
   scene.add(pointLight3);
 
   objList["room1"]["spotlight"] = new THREE.SpotLight( 0xffffff );
-  objList["room1"]["spotlight"].intensity = 0.5;
-  objList["room1"]["spotlight"].angle = Math.PI/23;
+  objList["room1"]["spotlight"].intensity = 1;
+  objList["room1"]["spotlight"].angle = Math.PI/18;
   objList["room1"]["spotlight"].castShadow = true;
   // scene.add(objList["room1"]["spotlight"]);
 }
@@ -146,6 +146,9 @@ function addGroup2(location, name){
   pivot2.add(objList[location][name].mesh); // 設定要以哪個位置旋轉
   objList[location][name].mesh.position.set(0, 0, -2.5); //要旋轉的物體鄉對於pivot2的位置
 }
+
+// map the showcase and object
+let objectMap = {"case2": "bowl1", "case1": "diamond1", "case3": "vase1", "case6": "lineball1", "case8": "cylinder1"};
 
 initScene();
 createLight();

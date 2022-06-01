@@ -270,8 +270,14 @@ function addLineBall(x, y, z, name, radius, location){
 }
 
 function addSpotLight(x, y, z, name, location){
-    objList["room1"]["spotlight"].target = objList[location][name].mesh;
-    objList["room1"]["spotlight"].position.set(x, y, z);
+    if(objList[location][name].mesh)
+        objList["room1"]["spotlight"].target = objList[location][name].mesh;
+    else
+        objList["room1"]["spotlight"].target = objList[location][name];
+    if(name == "cylinder1")
+        objList["room1"]["spotlight"].position.set(x, y, 15);
+    else
+        objList["room1"]["spotlight"].position.set(0, y, z);
     scene.add(objList["room1"]["spotlight"]);
     scene.remove(objList["room1"]["pointlight"]);
 }

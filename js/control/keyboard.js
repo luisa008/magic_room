@@ -92,6 +92,9 @@ function cameraAnimation() {
         camera.position.z += deltaZ;
         CAMERA_MOVING = true;
         // console.log(camera.position);
+        if(!(scene.getObjectByName("room1-pointlight"))){
+            removeSpotLight();
+        }
     } else {
         CAMERA_MOVING = false;
     }

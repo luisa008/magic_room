@@ -57,6 +57,7 @@ function onclick(event) {
                 eyeAngleXZ = objList[location][name].focusAngleXZ;
                 eyeAngleYZ = objList[location][name].focusAngleYZ;
                 moveEye();
+                addSpotLight(objList[location][name].mesh.position.x, objList[location][name].mesh.position.y+3, objList[location][name].mesh.position.z, objectMap[name], location);
             }
         }
     }
