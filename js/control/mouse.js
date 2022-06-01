@@ -53,12 +53,7 @@ function onclick(event) {
                 camera.position.x = objList[location][name].focusPos[0];
                 camera.position.y = objList[location][name].focusPos[1];
                 camera.position.z = objList[location][name].focusPos[2];
-                console.log("objList[location][name].focusPos");
-                console.log(objList[location][name].focusPos);
-                console.log("objList[location][name].focusAngleYZ");
-                console.log(objList[location][name].focusAngleYZ);
-                console.log("camera.position");
-                console.log(camera.position);
+                
                 eyeAngleXZ = objList[location][name].focusAngleXZ;
                 eyeAngleYZ = objList[location][name].focusAngleYZ;
                 moveEye();

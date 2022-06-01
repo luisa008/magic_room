@@ -91,7 +91,7 @@ function cameraAnimation() {
         camera.position.x += deltaX;
         camera.position.z += deltaZ;
         CAMERA_MOVING = true;
-        console.log(camera.position);
+        // console.log(camera.position);
     } else {
         CAMERA_MOVING = false;
     }
@@ -123,8 +123,8 @@ function cameraAnimation() {
         );
     
         camera.lookAt(lookPos);
-        console.log(eyeAngleXZ);
-        console.log(eyeAngleYZ);
+        // console.log(eyeAngleXZ);
+        // console.log(eyeAngleYZ);
 
     }
     
