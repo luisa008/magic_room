@@ -287,3 +287,15 @@ function addLineBall(x, y, z, name, radius, location){
     objList[location][name].cashShadow = true;
     scene.add(objList[location][name]);
 }
+
+function addSpotLight(x, y, z, name, location){
+    objList["room1"]["spotlight"].target = objList[location][name].mesh;
+    objList["room1"]["spotlight"].position.set(x, y, z);
+    scene.add(objList["room1"]["spotlight"]);
+    scene.remove(objList["room1"]["pointlight"]);
+}
+
+function removeSpotLight(){
+    scene.remove(objList["room1"]["spotlight"]);
+    scene.add(objList["room1"]["pointlight"]);
+}
